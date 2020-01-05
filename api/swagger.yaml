@@ -1,0 +1,1669 @@
+---
+swagger: "2.0"
+info:
+  description: "The validation APIs help you validate data. Check if an E-mail address\
+    \ is real. Check if a domain is real. Check up on an IP address, and even where\
+    \ it is located. All this and much more is available in the validation API."
+  version: "v1"
+  title: "validateapi"
+host: "api.cloudmersive.com"
+schemes:
+- "https"
+paths:
+  /validate/address/parse:
+    post:
+      tags:
+      - "Address"
+      summary: "Parse an unstructured input text string into an international, formatted\
+        \ address"
+      description: "Uses machine learning and Natural Language Processing (NLP) to\
+        \ handle a wide array of cases, including non-standard and unstructured address\
+        \ strings across a wide array of countries and address formatting norms."
+      operationId: "Address_ParseString"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input parse request"
+        required: true
+        schema:
+          $ref: "#/definitions/ParseAddressRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ParseAddressResponse"
+      security:
+      - Apikey: []
+  /validate/address/country:
+    post:
+      tags:
+      - "Address"
+      summary: "Validate and normalize country information, return ISO 3166-1 country\
+        \ codes and country name"
+      description: "Validates and normalizes country information, and returns key\
+        \ information about a country.  Also returns distinct time zones in the country."
+      operationId: "Address_Country"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input request"
+        required: true
+        schema:
+          $ref: "#/definitions/ValidateCountryRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ValidateCountryResponse"
+      security:
+      - Apikey: []
+  /validate/address/country/get-timezones:
+    post:
+      tags:
+      - "Address"
+      summary: "Gets IANA/Olsen time zones for a country"
+      description: "Gets the IANA/Olsen time zones for a country."
+      operationId: "Address_GetTimezone"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input request"
+        required: true
+        schema:
+          $ref: "#/definitions/GetTimezonesRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetTimezonesResponse"
+      security:
+      - Apikey: []
+  /validate/domain/check:
+    post:
+      tags:
+      - "Domain"
+      summary: "Validate a domain name"
+      description: "Check whether a domain name is valid or not.  API performs a live\
+        \ validation by contacting DNS services to validate the existence of the domain\
+        \ name."
+      operationId: "Domain_Check"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "domain"
+        description: "Domain name to check, for example \"cloudmersive.com\".  The\
+          \ input is a string so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Domain"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CheckResponse"
+      security:
+      - Apikey: []
+  /validate/domain/whois:
+    post:
+      tags:
+      - "Domain"
+      summary: "Get WHOIS information for a domain"
+      description: "Validate whether a domain name exists, and also return the full\
+        \ WHOIS record for that domain name.  WHOIS records include all the registration\
+        \ details of the domain name, such as information about the domain's owners."
+      operationId: "Domain_Post"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "domain"
+        description: "Domain name to check, for example \"cloudmersive.com\".   The\
+          \ input is a string so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Domain"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/WhoisResponse"
+      security:
+      - Apikey: []
+  /validate/domain/url/syntax-only:
+    post:
+      tags:
+      - "Domain"
+      summary: "Validate a URL syntactically"
+      description: "Validate whether a URL is syntactically valid (does not check\
+        \ endpoint for validity).  Accepts various types of input and produces a well-formed\
+        \ URL as output."
+      operationId: "Domain_UrlSyntaxOnly"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "Input URL information"
+        required: true
+        schema:
+          $ref: "#/definitions/ValidateUrlRequestSyntaxOnly"
+        x-exportParamName: "Request"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ValidateUrlResponseSyntaxOnly"
+      security:
+      - Apikey: []
+  /validate/domain/url/full:
+    post:
+      tags:
+      - "Domain"
+      summary: "Validate a URL fully"
+      description: "Validate whether a URL is syntactically valid (does not check\
+        \ endpoint for validity), whether it exists, and whether the endpoint is up\
+        \ and passes virus scan checks.  Accepts various types of input and produces\
+        \ a well-formed URL as output."
+      operationId: "Domain_UrlFull"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "Input URL request"
+        required: true
+        schema:
+          $ref: "#/definitions/ValidateUrlRequestFull"
+        x-exportParamName: "Request"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ValidateUrlResponseFull"
+      security:
+      - Apikey: []
+  /validate/email/address/syntaxOnly:
+    post:
+      tags:
+      - "Email"
+      summary: "Validate email adddress for syntactic correctness only"
+      description: "Validate whether a given email address is syntactically correct\
+        \ via a limited local-only check.  Use the address/full API to do a full validation."
+      operationId: "Email_Post"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "Email address to validate, e.g. \"support@cloudmersive.com\"\
+          .    The input is a string so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AddressVerifySyntaxOnlyResponse"
+      security:
+      - Apikey: []
+  /validate/email/address/servers:
+    post:
+      tags:
+      - "Email"
+      summary: "Partially check whether an email address is valid"
+      description: "Validate an email address by identifying whether its parent domain\
+        \ has email servers defined.  This call is less limited than syntaxOnly but\
+        \ not as comprehensive as address/full."
+      operationId: "Email_AddressGetServers"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "email"
+        description: "Email address to validate, e.g. \"support@cloudmersive.com\"\
+          .    The input is a string so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Email"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/AddressGetServersResponse"
+      security:
+      - Apikey: []
+  /validate/email/address/full:
+    post:
+      tags:
+      - "Email"
+      summary: "Fully validate an email address"
+      description: "Performs a full validation of the email address.  Checks for syntactic\
+        \ correctness, identifies the mail server in question if any, and then contacts\
+        \ the email server to validate the existence of the account - without sending\
+        \ any emails."
+      operationId: "Email_FullValidation"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "email"
+        description: "Email address to validate, e.g. \"support@cloudmersive.com\"\
+          .    The input is a string so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Email"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/FullEmailValidationResponse"
+      security:
+      - Apikey: []
+  /validate/ip/geolocate:
+    post:
+      tags:
+      - "IPAddress"
+      summary: "Geolocate an IP address"
+      description: "Identify an IP address Country, State/Provence, City, Zip/Postal\
+        \ Code, etc.  Useful for security and UX applications."
+      operationId: "IPAddress_Post"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "IP address to geolocate, e.g. \"55.55.55.55\".  The input is\
+          \ a string so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GeolocateResponse"
+      security:
+      - Apikey: []
+  /validate/lead-enrichment/lead/enrich:
+    post:
+      tags:
+      - "LeadEnrichment"
+      summary: "Enrich an input lead with additional fields of data"
+      operationId: "LeadEnrichment_EnrichLead"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "Input lead with known fields set, and unknown fields left blank\
+          \ (null)"
+        required: true
+        schema:
+          $ref: "#/definitions/LeadEnrichmentRequest"
+        x-exportParamName: "Request"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/LeadEnrichmentResponse"
+      security:
+      - Apikey: []
+  /validate/name/full-name:
+    post:
+      tags:
+      - "Name"
+      summary: "Parse and validate a full name"
+      description: "Parses a full name string (e.g. \"Mr. Jon van der Waal Jr.\")\
+        \ into its component parts (and returns these component parts), and then validates\
+        \ whether it is a valid name string or not"
+      operationId: "Name_ValidateFullName"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Validation request information"
+        required: true
+        schema:
+          $ref: "#/definitions/FullNameValidationRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/FullNameValidationResponse"
+      security:
+      - Apikey: []
+  /validate/name/first:
+    post:
+      tags:
+      - "Name"
+      summary: "Validate a first name"
+      description: "Determines if a string is a valid first name (given name)"
+      operationId: "Name_ValidateFirstName"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Validation request information"
+        required: true
+        schema:
+          $ref: "#/definitions/FirstNameValidationRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/FirstNameValidationResponse"
+      security:
+      - Apikey: []
+  /validate/name/last:
+    post:
+      tags:
+      - "Name"
+      summary: "Validate a last name"
+      description: "Determines if a string is a valid last name (surname)"
+      operationId: "Name_ValidateLastName"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Validation request information"
+        required: true
+        schema:
+          $ref: "#/definitions/LastNameValidationRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/LastNameValidationResponse"
+      security:
+      - Apikey: []
+  /validate/name/get-gender:
+    post:
+      tags:
+      - "Name"
+      summary: "Get the gender of a first name"
+      description: "Determines the gender of a first name (given name)"
+      operationId: "Name_GetGender"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Gender request information"
+        required: true
+        schema:
+          $ref: "#/definitions/GetGenderRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GetGenderResponse"
+      security:
+      - Apikey: []
+  /validate/name/identifier:
+    post:
+      tags:
+      - "Name"
+      summary: "Validate a code identifier"
+      description: "Determines if the input name is a valid technical / code identifier.\
+        \  Configure input rules such as whether whitespace, hyphens, underscores,\
+        \ etc. are allowed.  For example, a valid identifier might be \"helloWorld\"\
+        \ but not \"hello*World\"."
+      operationId: "Name_Identifier"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Identifier validation request information"
+        required: true
+        schema:
+          $ref: "#/definitions/ValidateIdentifierRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ValidateIdentifierResponse"
+      security:
+      - Apikey: []
+  /validate/phonenumber/basic:
+    post:
+      tags:
+      - "PhoneNumber"
+      summary: "Validate phone number (basic)"
+      description: "Validate a phone number by analyzing the syntax"
+      operationId: "PhoneNumber_SyntaxOnly"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "Phone number to validate in a PhoneNumberValidateRequest object.\
+          \  Try a phone number such as \"1.800.463.3339\", and either leave DefaultCountryCode\
+          \ blank or use \"US\"."
+        required: true
+        schema:
+          $ref: "#/definitions/PhoneNumberValidateRequest"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/PhoneNumberValidationResponse"
+      security:
+      - Apikey: []
+  /validate/useragent/parse:
+    post:
+      tags:
+      - "UserAgent"
+      summary: "Parse an HTTP User-Agent string, identify robots"
+      description: "Uses a parsing system and database to parse the User-Agent into\
+        \ its structured component parts, such as Browser, Browser Version, Browser\
+        \ Engine, Operating System, and importantly, Robot identification."
+      operationId: "UserAgent_Parse"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "Input parse request"
+        required: true
+        schema:
+          $ref: "#/definitions/UserAgentValidateRequest"
+        x-exportParamName: "Request"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UserAgentValidateResponse"
+      security:
+      - Apikey: []
+  /validate/vat/lookup:
+    post:
+      tags:
+      - "Vat"
+      summary: "Lookup a VAT code"
+      description: "Checks if a VAT code is valid, and if it is, returns more information\
+        \ about it"
+      operationId: "Vat_VatLookup"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input VAT code"
+        required: true
+        schema:
+          $ref: "#/definitions/VatLookupRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/VatLookupResponse"
+      security:
+      - Apikey: []
+securityDefinitions:
+  Apikey:
+    description: "API Key Authentication"
+    type: "apiKey"
+    name: "Apikey"
+    in: "header"
+definitions:
+  ParseAddressRequest:
+    type: "object"
+    properties:
+      AddressString:
+        type: "string"
+        description: "A mailing address or street address formatted as a single text\
+          \ string; this will be parsed into its components"
+      CapitalizationMode:
+        type: "string"
+        description: "Optional; indicates how the parsed output should be capitalized;\
+          \ default is Title Case; possible values are: \"Uppercase\" will set the\
+          \ capitalization to UPPER CASE; \"Lowercase\" will set the capitalization\
+          \ to lower case; \"Titlecase\" will set the capitalization to Title Case;\
+          \ and \"Originalcase\" will preserve the original casing as much as possible"
+    description: "Request to parse an address formatted as a string/free text into\
+      \ a structured address"
+    example:
+      AddressString: "AddressString"
+      CapitalizationMode: "CapitalizationMode"
+  ParseAddressResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if the parsing operation was successful, false otherwise"
+      Building:
+        type: "string"
+        description: "The name of the building, house or structure if applicable,\
+          \ such as \"Cloudmersive Building 2\".  This will often by null."
+      StreetNumber:
+        type: "string"
+        description: "The street number or house number of the address.  For example,\
+          \ in the address \"1600 Pennsylvania Avenue NW\" the street number would\
+          \ be \"1600\".  This value will typically be populated for most addresses."
+      Street:
+        type: "string"
+        description: "The name of the street or road of the address.  For example,\
+          \ in the address \"1600 Pennsylvania Avenue NW\" the street number would\
+          \ be \"Pennsylvania Avenue NW\"."
+      City:
+        type: "string"
+        description: "The city of the address."
+      StateOrProvince:
+        type: "string"
+        description: "The state or province of the address."
+      PostalCode:
+        type: "string"
+        description: "The postal code or zip code of the address."
+      CountryFullName:
+        type: "string"
+        description: "Country of the address, if present in the address.  If not included\
+          \ in the address it will be null."
+      ISOTwoLetterCode:
+        type: "string"
+        description: "Two-letter ISO 3166-1 country code"
+    description: "Result of parsing an address into its component parts"
+    example:
+      Building: "Building"
+      StateOrProvince: "StateOrProvince"
+      StreetNumber: "StreetNumber"
+      Street: "Street"
+      PostalCode: "PostalCode"
+      CountryFullName: "CountryFullName"
+      City: "City"
+      ISOTwoLetterCode: "ISOTwoLetterCode"
+      Successful: true
+  ValidateCountryRequest:
+    type: "object"
+    properties:
+      RawCountryInput:
+        type: "string"
+        description: "Raw country input - can be a two-letter code (FIPS 10-4 or ISO\
+          \ 3166-1), three-letter code (ISO 3166-1) or country name"
+    description: "Input parameter to a country validation request"
+    example:
+      RawCountryInput: "RawCountryInput"
+  ValidateCountryResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if successful, false otherwise"
+      CountryFullName:
+        type: "string"
+        description: "Full name of the country"
+      ISOTwoLetterCode:
+        type: "string"
+        description: "Two-letter ISO 3166-1 country code"
+      FIPSTwoLetterCode:
+        type: "string"
+        description: "Two-letter FIPS 10-4 country code"
+      ThreeLetterCode:
+        type: "string"
+        description: "Three-letter ISO 3166-1 country code"
+      Timezones:
+        type: "array"
+        description: "Time zones (IANA/Olsen) in the country"
+        items:
+          $ref: "#/definitions/Timezone"
+    description: "Result of performing a country validation operation"
+    example:
+      FIPSTwoLetterCode: "FIPSTwoLetterCode"
+      Timezones:
+      - BaseUTCOffset: "BaseUTCOffset"
+        Now: "2000-01-23T04:56:07.000+00:00"
+        Name: "Name"
+      - BaseUTCOffset: "BaseUTCOffset"
+        Now: "2000-01-23T04:56:07.000+00:00"
+        Name: "Name"
+      CountryFullName: "CountryFullName"
+      ThreeLetterCode: "ThreeLetterCode"
+      ISOTwoLetterCode: "ISOTwoLetterCode"
+      Successful: true
+  Timezone:
+    type: "object"
+    properties:
+      Name:
+        type: "string"
+        description: "Name of the Time Zone"
+      BaseUTCOffset:
+        type: "string"
+        description: "UTC offset for this time zone"
+      Now:
+        type: "string"
+        format: "date-time"
+        description: "The current time (Now) in this time zone"
+    description: "IANA/Olsen time zone"
+    example:
+      BaseUTCOffset: "BaseUTCOffset"
+      Now: "2000-01-23T04:56:07.000+00:00"
+      Name: "Name"
+  GetTimezonesRequest:
+    type: "object"
+    properties:
+      CountryCodeOrName:
+        type: "string"
+        description: "Can be the two-letter, three-letter country codes or country\
+          \ name"
+    description: "Request to get time zones for a country"
+    example:
+      CountryCodeOrName: "CountryCodeOrName"
+  GetTimezonesResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if successful, false otherwise"
+      CountryFullName:
+        type: "string"
+        description: "Full name of the country"
+      ISOTwoLetterCode:
+        type: "string"
+        description: "Two-letter ISO 3166-1 country code"
+      FIPSTwoLetterCode:
+        type: "string"
+        description: "Two-letter FIPS 10-4 country code"
+      ThreeLetterCode:
+        type: "string"
+        description: "Three-letter ISO 3166-1 country code"
+      Timezones:
+        type: "array"
+        description: "Time zones (IANA/Olsen) in the country"
+        items:
+          $ref: "#/definitions/Timezone"
+    description: "Result of performing a get time zones operation"
+    example:
+      FIPSTwoLetterCode: "FIPSTwoLetterCode"
+      Timezones:
+      - BaseUTCOffset: "BaseUTCOffset"
+        Now: "2000-01-23T04:56:07.000+00:00"
+        Name: "Name"
+      - BaseUTCOffset: "BaseUTCOffset"
+        Now: "2000-01-23T04:56:07.000+00:00"
+        Name: "Name"
+      CountryFullName: "CountryFullName"
+      ThreeLetterCode: "ThreeLetterCode"
+      ISOTwoLetterCode: "ISOTwoLetterCode"
+      Successful: true
+  CheckResponse:
+    type: "object"
+    properties:
+      ValidDomain:
+        type: "boolean"
+        description: "True if the domain name was valid, false if it is not"
+    description: "Result of a validation operation"
+    example:
+      ValidDomain: true
+  WhoisResponse:
+    type: "object"
+    properties:
+      ValidDomain:
+        type: "boolean"
+        description: "True if the domain is valid, false if it is not"
+      RegistrantName:
+        type: "string"
+        description: "Name of the domain registrant"
+      RegistrantOrganization:
+        type: "string"
+        description: "Organization name of the domain registrant"
+      RegistrantEmail:
+        type: "string"
+        description: "Email address of the domain registrant"
+      RegistrantStreetNumber:
+        type: "string"
+        description: "Street number of the address of the domain registrant, if available"
+      RegistrantStreet:
+        type: "string"
+        description: "Street name of the address of the domain registrant, if available"
+      RegistrantCity:
+        type: "string"
+        description: "City of the domain registrant, if available"
+      RegistrantStateOrProvince:
+        type: "string"
+        description: "State or Province of the address of the domain registrant, if\
+          \ available"
+      RegistrantPostalCode:
+        type: "string"
+        description: "Postal code of the address of the domain registrant, if available"
+      RegistrantCountry:
+        type: "string"
+        description: "Country of the address of the domain registrant, if available"
+      RegistrantRawAddress:
+        type: "string"
+        description: "Raw address string of the domain registrant, if available"
+      RegistrantTelephone:
+        type: "string"
+        description: "Telephone number of the address of the domain registrant"
+      WhoisServer:
+        type: "string"
+        description: "Server used to lookup WHOIS information (may change based on\
+          \ lookup)."
+      RawTextRecord:
+        type: "string"
+        description: "WHOIS raw text record"
+      CreatedDt:
+        type: "string"
+        format: "date-time"
+        description: "Creation date for the record"
+    description: "Result of a WHOIS operation"
+    example:
+      WhoisServer: "WhoisServer"
+      CreatedDt: "2000-01-23T04:56:07.000+00:00"
+      ValidDomain: true
+      RegistrantTelephone: "RegistrantTelephone"
+      RegistrantCity: "RegistrantCity"
+      RegistrantStreet: "RegistrantStreet"
+      RegistrantStreetNumber: "RegistrantStreetNumber"
+      RegistrantCountry: "RegistrantCountry"
+      RegistrantPostalCode: "RegistrantPostalCode"
+      RegistrantName: "RegistrantName"
+      RegistrantStateOrProvince: "RegistrantStateOrProvince"
+      RegistrantRawAddress: "RegistrantRawAddress"
+      RegistrantEmail: "RegistrantEmail"
+      RawTextRecord: "RawTextRecord"
+      RegistrantOrganization: "RegistrantOrganization"
+  ValidateUrlRequestSyntaxOnly:
+    type: "object"
+    properties:
+      URL:
+        type: "string"
+        description: "URL to validate"
+    description: "Request to determine if a URL is valid"
+    example:
+      URL: "URL"
+  ValidateUrlResponseSyntaxOnly:
+    type: "object"
+    properties:
+      ValidURL:
+        type: "boolean"
+        description: "True if the URL is valid, false otherwise"
+      WellFormedURL:
+        type: "string"
+        description: "Well-formed version of the URL"
+    description: "Result of validating a URL with syntax only"
+    example:
+      ValidURL: true
+      WellFormedURL: "WellFormedURL"
+  ValidateUrlRequestFull:
+    type: "object"
+    properties:
+      URL:
+        type: "string"
+        description: "URL to validate"
+    description: "Request to determine if a URL is valid"
+    example:
+      URL: "URL"
+  ValidateUrlResponseFull:
+    type: "object"
+    properties:
+      ValidURL:
+        type: "boolean"
+        description: "True if the URL has valid syntax, a valid domain, a valid endpoint,\
+          \ and passes virus scan checks; false otherwise"
+      Valid_Syntax:
+        type: "boolean"
+        description: "True if the URL has valid syntax, false otherwise"
+      Valid_Domain:
+        type: "boolean"
+        description: "True if the domain name is valid and exists, false otherwise"
+      Valid_Endpoint:
+        type: "boolean"
+        description: "True if the endpoint is up and responsive and passes a virus\
+          \ scan check, false otherwise"
+      WellFormedURL:
+        type: "string"
+        description: "Well-formed version of the URL"
+    description: "Result of validating a URL with full validation"
+    example:
+      ValidURL: true
+      Valid_Syntax: true
+      Valid_Endpoint: true
+      Valid_Domain: true
+      WellFormedURL: "WellFormedURL"
+  AddressVerifySyntaxOnlyResponse:
+    type: "object"
+    properties:
+      ValidAddress:
+        type: "boolean"
+        description: "True if the email address is syntactically valid, false if it\
+          \ is not"
+      Domain:
+        type: "string"
+        description: "Domain name of the email address"
+      IsFreeEmailProvider:
+        type: "boolean"
+        description: "True if the email domain name is a free provider (typically\
+          \ a free to sign up web email provider for consumers / personal use), false\
+          \ otherwise."
+      IsDisposable:
+        type: "boolean"
+        description: "True if the email address is a disposable email address, false\
+          \ otherwise; these disposable providers are not typically used to receive\
+          \ email and so will have a low likelihood of opening mail sent there."
+    description: "Syntactic validity of email address"
+    example:
+      ValidAddress: true
+      IsFreeEmailProvider: true
+      Domain: "Domain"
+      IsDisposable: true
+  AddressGetServersResponse:
+    type: "object"
+    properties:
+      Success:
+        type: "boolean"
+        description: "True if partial address validation was successufl, false otherwise"
+      Servers:
+        type: "array"
+        description: "Email servers for this email address"
+        items:
+          type: "string"
+    description: "Result of a partial email address validation"
+    example:
+      Servers:
+      - "Servers"
+      - "Servers"
+      Success: true
+  FullEmailValidationResponse:
+    type: "object"
+    properties:
+      ValidAddress:
+        type: "boolean"
+        description: "True if the email address is valid overall, false otherwise"
+      MailServerUsedForValidation:
+        type: "string"
+        description: "Email server connected to for verification"
+      Valid_Syntax:
+        type: "boolean"
+        description: "True if the syntax of the email address is valid, false otherwise.\
+          \  This is one component of ValidAddress, but not the only one."
+      Valid_Domain:
+        type: "boolean"
+        description: "True if the domain name of the email address is valid, false\
+          \ otherwise.  This is one component of ValidAddress, but not the only one."
+      Valid_SMTP:
+        type: "boolean"
+        description: "True if the email address was verified by the remote server,\
+          \ false otherwise.  This is one component of ValidAddress, but not the only\
+          \ one."
+      IsCatchallDomain:
+        type: "boolean"
+        description: "True if the domain is a catch-all domain name, false otherwise.\
+          \  Catch-all domain names, while rare, always accept inbound email to ensure\
+          \ they do not lose any potentially useful emails.  Catch-all domain names\
+          \ can occassionally be configured to first accept and store all inbound\
+          \ email, but then later send a bounce email back to the sender after a delayed\
+          \ period of time."
+      Domain:
+        type: "string"
+        description: "Domain name of the email address"
+      IsFreeEmailProvider:
+        type: "boolean"
+        description: "True if the email domain name is a free provider (typically\
+          \ a free to sign up web email provider for consumers / personal use), false\
+          \ otherwise."
+      IsDisposable:
+        type: "boolean"
+        description: "True if the email address is a disposable email address, false\
+          \ otherwise; these disposable providers are not typically used to receive\
+          \ email and so will have a low likelihood of opening mail sent there."
+    description: "Full email addresss validation result"
+    example:
+      ValidAddress: true
+      MailServerUsedForValidation: "MailServerUsedForValidation"
+      Valid_Syntax: true
+      IsCatchallDomain: true
+      Valid_SMTP: true
+      Valid_Domain: true
+      IsFreeEmailProvider: true
+      Domain: "Domain"
+      IsDisposable: true
+  GeolocateResponse:
+    type: "object"
+    properties:
+      CountryCode:
+        type: "string"
+        description: "Two-letter country code of IP address"
+      CountryName:
+        type: "string"
+        description: "Country name of IP address"
+      City:
+        type: "string"
+        description: "City of IP address"
+      RegionCode:
+        type: "string"
+        description: "State/region code of IP address"
+      RegionName:
+        type: "string"
+        description: "State/region of IP address"
+      ZipCode:
+        type: "string"
+        description: "Zip or postal code of IP address"
+      TimezoneStandardName:
+        type: "string"
+        description: "Timezone of IP address"
+      Latitude:
+        type: "number"
+        format: "double"
+        description: "Latitude of IP address"
+      Longitude:
+        type: "number"
+        format: "double"
+        description: "Longitude of IP address"
+    description: "Geolocation result"
+    example:
+      RegionCode: "RegionCode"
+      CountryName: "CountryName"
+      RegionName: "RegionName"
+      ZipCode: "ZipCode"
+      TimezoneStandardName: "TimezoneStandardName"
+      Latitude: 0.8008281904610115
+      City: "City"
+      CountryCode: "CountryCode"
+      Longitude: 6.027456183070403
+  LeadEnrichmentRequest:
+    type: "object"
+    properties:
+      ContactBusinessEmail:
+        type: "string"
+        description: "The person's business email address for the lead"
+      ContactFirstName:
+        type: "string"
+        description: "The person's first name for the lead"
+      ContactLastName:
+        type: "string"
+        description: "The person's last name for the lead"
+      CompanyName:
+        type: "string"
+        description: "Name of the company for the lead"
+      CompanyDomainName:
+        type: "string"
+        description: "Domain name / website for the lead"
+      CompanyHouseNumber:
+        type: "string"
+        description: "House number of the address of the company for the lead"
+      CompanyStreet:
+        type: "string"
+        description: "Street name of the address of the company for the lead"
+      CompanyCity:
+        type: "string"
+        description: "City of the address of the company for the lead"
+      CompanyStateOrProvince:
+        type: "string"
+        description: "State or Province of the address of the company for the lead"
+      CompanyPostalCode:
+        type: "string"
+        description: "Postal Code of the address of the company for the lead"
+      CompanyCountry:
+        type: "string"
+        description: "Country of the address of the company for the lead"
+      CompanyCountryCode:
+        type: "string"
+        description: "Country Code (2-letter ISO 3166-1) of the address of the company\
+          \ for the lead"
+      CompanyTelephone:
+        type: "string"
+        description: "Telephone of the company office for the lead"
+      CompanyVATNumber:
+        type: "string"
+        description: "VAT number of the company for the lead"
+    description: "Input lead contact; fill in known fields to extend them with matched\
+      \ field values"
+    example:
+      ContactBusinessEmail: "ContactBusinessEmail"
+      CompanyHouseNumber: "CompanyHouseNumber"
+      CompanyDomainName: "CompanyDomainName"
+      CompanyStreet: "CompanyStreet"
+      ContactLastName: "ContactLastName"
+      CompanyName: "CompanyName"
+      CompanyPostalCode: "CompanyPostalCode"
+      CompanyStateOrProvince: "CompanyStateOrProvince"
+      CompanyCountryCode: "CompanyCountryCode"
+      CompanyTelephone: "CompanyTelephone"
+      CompanyVATNumber: "CompanyVATNumber"
+      ContactFirstName: "ContactFirstName"
+      CompanyCity: "CompanyCity"
+      CompanyCountry: "CompanyCountry"
+  LeadEnrichmentResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if the operation was successful, false otherwise"
+      LeadType:
+        type: "string"
+        description: "The type of the lead; possible types are Junk (a single individual\
+          \ using a disposable/throwaway email address); Individual (a single individual,\
+          \ typically a consumer, not purchasing on behalf of a business); SmallBusiness\
+          \ (a small business, typically with fewer than 100 employees); MediumBusiness\
+          \ (a medium business, larger than 100 employees but fewer than 1000 employees);\
+          \ Enterprise (a large business with greater than 1000 employees); Business\
+          \ (a business customer of unknown size)"
+      ContactBusinessEmail:
+        type: "string"
+        description: "The person's business email address for the lead"
+      ContactFirstName:
+        type: "string"
+        description: "The person's first name for the lead"
+      ContactLastName:
+        type: "string"
+        description: "The person's last name for the lead"
+      ContactGender:
+        type: "string"
+        description: "Gender for contact name; possible values are Male, Female, and\
+          \ Neutral (can be applied to Male or Female).  Requires ContactFirstName."
+      CompanyName:
+        type: "string"
+        description: "Name of the company for the lead"
+      CompanyDomainName:
+        type: "string"
+        description: "Domain name / website for the lead"
+      CompanyHouseNumber:
+        type: "string"
+        description: "House number of the address of the company for the lead"
+      CompanyStreet:
+        type: "string"
+        description: "Street name of the address of the company for the lead"
+      CompanyCity:
+        type: "string"
+        description: "City of the address of the company for the lead"
+      CompanyStateOrProvince:
+        type: "string"
+        description: "State or Province of the address of the company for the lead"
+      CompanyPostalCode:
+        type: "string"
+        description: "Postal Code of the address of the company for the lead"
+      CompanyCountry:
+        type: "string"
+        description: "Country Name of the address of the company for the lead"
+      CompanyCountryCode:
+        type: "string"
+        description: "Country Code (2-letter ISO 3166-1) of the address of the company\
+          \ for the lead"
+      CompanyTelephone:
+        type: "string"
+        description: "Telephone of the company office for the lead"
+      CompanyVATNumber:
+        type: "string"
+        description: "VAT number of the company for the lead"
+      EmployeeCount:
+        type: "integer"
+        format: "int32"
+        description: "Count of employees at the company (estimated), if available"
+    description: "Result of the lead enrichment process"
+    example:
+      ContactBusinessEmail: "ContactBusinessEmail"
+      CompanyHouseNumber: "CompanyHouseNumber"
+      CompanyDomainName: "CompanyDomainName"
+      EmployeeCount: 0
+      LeadType: "LeadType"
+      Successful: true
+      CompanyStreet: "CompanyStreet"
+      ContactLastName: "ContactLastName"
+      CompanyName: "CompanyName"
+      CompanyPostalCode: "CompanyPostalCode"
+      CompanyStateOrProvince: "CompanyStateOrProvince"
+      CompanyCountryCode: "CompanyCountryCode"
+      CompanyTelephone: "CompanyTelephone"
+      CompanyVATNumber: "CompanyVATNumber"
+      ContactFirstName: "ContactFirstName"
+      ContactGender: "ContactGender"
+      CompanyCity: "CompanyCity"
+      CompanyCountry: "CompanyCountry"
+  FullNameValidationRequest:
+    type: "object"
+    properties:
+      FullNameString:
+        type: "string"
+        description: "Full name to process as a free-form string; supports many components\
+          \ such as First Name, Middle Name, Last Name, Title, Nickname, Suffix, and\
+          \ Display Name"
+    description: "Request to validate a full name string"
+    example:
+      FullNameString: "FullNameString"
+  FullNameValidationResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if the validation operation was successful, false otherwise"
+      ValidationResult_FirstName:
+        type: "string"
+        description: "Possible values are: ValidFirstName, ValidUnknownFirstName,\
+          \ InvalidSpamInput, InvalidCharacters, InvalidEmpty"
+      ValidationResult_LastName:
+        type: "string"
+        description: "Possible values are: ValidLastName, ValidUnknownLastName, InvalidSpamInput,\
+          \ InvalidCharacters, InvalidEmpty"
+      Title:
+        type: "string"
+        description: "The person's title (if supplied), e.g. \"Mr.\" or \"Ms.\""
+      FirstName:
+        type: "string"
+        description: "The first name (given name)"
+      MiddleName:
+        type: "string"
+        description: "The middle name(s); if there are multiple names they will be\
+          \ separated by spaces"
+      LastName:
+        type: "string"
+        description: "The last name (surname)"
+      NickName:
+        type: "string"
+        description: "Nickname (if supplied)"
+      Suffix:
+        type: "string"
+        description: "Suffix to the name, e.g. \"Jr.\" or \"Sr.\""
+      DisplayName:
+        type: "string"
+        description: "The full display name of the name"
+    description: "Result of a full name validation operation"
+    example:
+      Suffix: "Suffix"
+      ValidationResult_LastName: "ValidationResult_LastName"
+      FirstName: "FirstName"
+      ValidationResult_FirstName: "ValidationResult_FirstName"
+      DisplayName: "DisplayName"
+      Title: "Title"
+      LastName: "LastName"
+      MiddleName: "MiddleName"
+      NickName: "NickName"
+      Successful: true
+  FirstNameValidationRequest:
+    type: "object"
+    properties:
+      FirstName:
+        type: "string"
+        description: "First name to process"
+    description: "Request to validate a first name"
+    example:
+      FirstName: "FirstName"
+  FirstNameValidationResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if the validation operation was successful, false otherwise"
+      ValidationResult:
+        type: "string"
+        description: "Possible values are: ValidFirstName, ValidUnknownFirstName,\
+          \ InvalidSpamInput, InvalidCharacters, InvalidEmpty"
+    description: "Result of a first name validation operation"
+    example:
+      ValidationResult: "ValidationResult"
+      Successful: true
+  LastNameValidationRequest:
+    type: "object"
+    properties:
+      LastName:
+        type: "string"
+        description: "Last name to process"
+    description: "Request to validate a last name"
+    example:
+      LastName: "LastName"
+  LastNameValidationResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if the validation operation was successful, false otherwise"
+      ValidationResult:
+        type: "string"
+        description: "Possible values are: ValidLastName, ValidUnknownLastName, InvalidSpamInput,\
+          \ InvalidCharacters, InvalidEmpty"
+    description: "Result of a last name validation operation"
+    example:
+      ValidationResult: "ValidationResult"
+      Successful: true
+  GetGenderRequest:
+    type: "object"
+    properties:
+      FirstName:
+        type: "string"
+        description: "Input first name (given name) to get the gender of"
+      CountryCode:
+        type: "string"
+        description: "Optional; the country for this name, possible values are \"\
+          US\", \"LY\", \"NI\", \"TT\", \"MK\", \"KZ\", \"BO\", \"UG\", \"TZ\", \"\
+          CL\", \"SI\", \"MA\", \"RW\", \"VN\", \"AW\", \"CY\", \"BH\", \"SG\", \"\
+          ZA\", \"MU\", \"BR\", \"TN\", \"KH\", \"US\", \"TH\", \"TW\", \"UY\", \"\
+          DO\", \"CO\", \"UA\", \"QA\", \"BY\", \"SN\", \"SD\", \"FJ\", \"LB\", \"\
+          BE\", \"ML\", \"LV\", \"FR\", \"TM\", \"NG\", \"EC\", \"NO\", \"SL\", \"\
+          CR\", \"PA\", \"GE\", \"CH\", \"KR\", \"RS\", \"ZM\", \"FI\", \"BF\", \"\
+          MC\", \"AU\", \"GA\", \"LS\", \"RU\", \"IN\", \"SE\", \"LK\", \"BZ\", \"\
+          MX\", \"GH\", \"AF\", \"TJ\", \"BN\", \"DZ\", \"CM\", \"GR\", \"MD\", \"\
+          HN\", \"AT\", \"NZ\", \"SV\", \"GW\", \"NA\", \"AR\", \"MZ\", \"PK\", \"\
+          MN\", \"IQ\", \"BW\", \"VE\", \"PT\", \"BS\", \"AL\", \"TG\", \"ID\", \"\
+          ET\", \"CF\", \"JP\", \"BB\", \"PH\", \"CU\", \"BD\", \"AO\", \"SM\", \"\
+          LC\", \"ME\", \"RO\",  DANIL\"O\"\", \"ES\", \"EE\", \"IL\", \"ZW\", \"\
+          SY\", \"MW\", \"LU\", \"IR\", \"SC\", \"NL\", \"JO\", \"AM\", \"DE\", \"\
+          GL\", \"OM\", \"DK\", \"HR\", \"LI\", \"TD\", \"KM\", \"BA\", \"GM\", \"\
+          GD\", \"CA\", \"CZ\", \"MR\", \"ST\", \"IS\", \"LR\", \"IE\", \"VC\", \"\
+          AE\", \"KG\", \"DJ\", \"TR\", \"KE\", \"NE\", \"UZ\", \"CN\", \"GQ\", \"\
+          SK\", \"BJ\", \"MG\", \"BT\", \"EG\", \"PL\", \"IT\", \"SA\", \"MY\", \"\
+          CI\", \"AG\", \"AD\", \"KS\", \"HU\", \"CG\", \"KP\", \"DM\", \"GN\", \"\
+          GT\", \"NP\", \"JM\", \"LA\", \"GB\", \"BG\", \"HT\", \"PE\", \"AZ\", \"\
+          LT\", \"SZ\", \"PY\", \"MT\", \"VA\""
+    description: "Request to get the gender from a first name"
+    example:
+      FirstName: "FirstName"
+      CountryCode: "CountryCode"
+  GetGenderResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if successful, false otherwise"
+      Gender:
+        type: "string"
+        description: "Gender for this name; possible values are Male, Female, and\
+          \ Neutral (can be applied to Male or Female)"
+    description: "Result of the GetGender operation"
+    example:
+      Gender: "Gender"
+      Successful: true
+  ValidateIdentifierRequest:
+    type: "object"
+    properties:
+      Input:
+        type: "string"
+        description: "Text string identifier input"
+      AllowWhitespace:
+        type: "boolean"
+        description: "True if whitespace is allowed in the identifier, false otherwise"
+      AllowHyphens:
+        type: "boolean"
+        description: "True if hyphens are allowd in the identifier, false otherwise"
+      AllowUnderscore:
+        type: "boolean"
+        description: "True if underscores are allowed in the identifier, false otherwise"
+      AllowNumbers:
+        type: "boolean"
+        description: "True if numbers are allowed in the identifier, false otherwise"
+      AllowPeriods:
+        type: "boolean"
+        description: "True if periods are allowed in the identifier, false otherwise"
+      MaxLength:
+        type: "integer"
+        format: "int32"
+        description: "Optional; maximum length, if any, of the identifier"
+      MinLength:
+        type: "integer"
+        format: "int32"
+        description: "Optional; minimum length, if any, of the identifier"
+    description: "Identifier validation request, including the input identifier as\
+      \ well as various identifier rules"
+    example:
+      AllowWhitespace: true
+      Input: "Input"
+      AllowNumbers: true
+      AllowPeriods: true
+      AllowUnderscore: true
+      AllowHyphens: true
+      MinLength: 6
+      MaxLength: 0
+  ValidateIdentifierResponse:
+    type: "object"
+    properties:
+      ValidIdentifier:
+        type: "boolean"
+        description: "True if the input identifier is valid, false otherwise"
+      Error:
+        type: "string"
+        description: "Resulting error from the identifier validation; possible errors\
+          \ are: \"InputIsEmpty\", \"ContainsWhitespace\", \"ContainsNumbers\", \"\
+          ContainsHyphen\", \"ContainsUnderscore\", \"ContainsPeriod\", \"TooShort\"\
+          , \"TooLong\", \"ContainsSpecialCharacters\""
+    description: "Result of performing an identifier validation operation"
+    example:
+      ValidIdentifier: true
+      Error: "Error"
+  PhoneNumberValidateRequest:
+    type: "object"
+    properties:
+      PhoneNumber:
+        type: "string"
+        description: "Raw phone number string to parse as input for validation"
+      DefaultCountryCode:
+        type: "string"
+        description: "Optional, default country code.  If left blank, will default\
+          \ to \"US\"."
+    description: "Request to validate a phone number"
+    example:
+      PhoneNumber: "PhoneNumber"
+      DefaultCountryCode: "DefaultCountryCode"
+  PhoneNumberValidationResponse:
+    type: "object"
+    properties:
+      IsValid:
+        type: "boolean"
+        description: "True if the phone number is valid, false otherwise"
+      Successful:
+        type: "boolean"
+        description: "True if the operation was successful, false if there was an\
+          \ error during validation.  See IsValid for validation result."
+      PhoneNumberType:
+        type: "string"
+        description: "Type of phone number; possible values are: FixedLine, Mobile,\
+          \ FixedLineOrMobile, TollFree, PremiumRate, \r\nSharedCost, Voip, PersonalNumber,\
+          \ Pager, Uan, Voicemail, Unknown"
+      E164Format:
+        type: "string"
+        description: "E.164 format of the phone number"
+      InternationalFormat:
+        type: "string"
+        description: "Internaltional format of the phone number"
+      NationalFormat:
+        type: "string"
+        description: "National format of the phone number"
+      CountryCode:
+        type: "string"
+        description: "Two digit country code of the phone number"
+      CountryName:
+        type: "string"
+        description: "User-friendly long name of the country for the phone number"
+    description: "Result from validating a phone number"
+    example:
+      InternationalFormat: "InternationalFormat"
+      NationalFormat: "NationalFormat"
+      CountryName: "CountryName"
+      E164Format: "E164Format"
+      CountryCode: "CountryCode"
+      Successful: true
+      PhoneNumberType: "PhoneNumberType"
+      IsValid: true
+  UserAgentValidateRequest:
+    type: "object"
+    properties:
+      UserAgentString:
+        type: "string"
+        description: "The user agent string you wish to parse and validate"
+    description: "User-Agent parse and validation request"
+    example:
+      UserAgentString: "UserAgentString"
+  UserAgentValidateResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if the operation was successful, false otherwise"
+      IsBot:
+        type: "boolean"
+        description: "True if the request is a known robot, false otherwise"
+      BotName:
+        type: "string"
+        description: "Optional; name of the robot if the request was from a known\
+          \ robot, otherwise null"
+      BotURL:
+        type: "string"
+        description: "Optional; if available, the URL to the robot"
+      OperatingSystem:
+        type: "string"
+        description: "Operating System of the User-Agent (e.g. Windows)"
+      OperatingSystemCPUPlatform:
+        type: "string"
+        description: "The CPU platform of the User-Agent (e.g. x64)"
+      OperatingSystemVersion:
+        type: "string"
+        description: "The version of the operating system of the User-Agent (e.g.\
+          \ \"10\" for Windows 10)"
+      DeviceType:
+        type: "string"
+        description: "Device type of the User-Agent; possible values are \"DESKTOP\"\
+          , \"SMARTPHONE\", \"TABLET\""
+      DeviceBrandName:
+        type: "string"
+        description: "Brand name of the User-Agent"
+      DeviceModel:
+        type: "string"
+        description: "Model name or number of the User-Agent"
+      BrowserName:
+        type: "string"
+        description: "Name of the Browser"
+      BrowserVersion:
+        type: "string"
+        description: "Version of the Browser"
+      BrowserEngineName:
+        type: "string"
+        description: "Name of the Browser Engine"
+      BrowserEngineVersion:
+        type: "string"
+        description: "Version of the Browser Engine"
+    description: "The result of a User-Agent validation request"
+    example:
+      OperatingSystem: "OperatingSystem"
+      DeviceModel: "DeviceModel"
+      BrowserName: "BrowserName"
+      IsBot: true
+      OperatingSystemVersion: "OperatingSystemVersion"
+      DeviceBrandName: "DeviceBrandName"
+      Successful: true
+      BrowserEngineVersion: "BrowserEngineVersion"
+      DeviceType: "DeviceType"
+      OperatingSystemCPUPlatform: "OperatingSystemCPUPlatform"
+      BotURL: "BotURL"
+      BrowserEngineName: "BrowserEngineName"
+      BrowserVersion: "BrowserVersion"
+      BotName: "BotName"
+  VatLookupRequest:
+    type: "object"
+    properties:
+      VatCode:
+        type: "string"
+        description: "VAT code to lookup; example \"CZ25123891\""
+    description: "Input to a VAT lookup request"
+    example:
+      VatCode: "VatCode"
+  VatLookupResponse:
+    type: "object"
+    properties:
+      CountryCode:
+        type: "string"
+        description: "Two-letter country code"
+      VatNumber:
+        type: "string"
+        description: "VAT number"
+      IsValid:
+        type: "boolean"
+        description: "True if the VAT code is valid, false otherwise"
+      BusinessName:
+        type: "string"
+        description: "Name of the business"
+      BusinessAddress:
+        type: "string"
+        description: "Business address as a single string"
+      BusinessBuilding:
+        type: "string"
+        description: "For the business address, the name of the building, house or\
+          \ structure if applicable, such as \"Cloudmersive Building 2\".  This will\
+          \ often by null."
+      BusinessStreetNumber:
+        type: "string"
+        description: "For the business address, the street number or house number\
+          \ of the address.  For example, in the address \"1600 Pennsylvania Avenue\
+          \ NW\" the street number would be \"1600\".  This value will typically be\
+          \ populated for most addresses."
+      BusinessStreet:
+        type: "string"
+        description: "For the business address, the name of the street or road of\
+          \ the address.  For example, in the address \"1600 Pennsylvania Avenue NW\"\
+          \ the street number would be \"Pennsylvania Avenue NW\"."
+      BusinessCity:
+        type: "string"
+        description: "For the business address, the city of the address."
+      BusinessStateOrProvince:
+        type: "string"
+        description: "For the business address, the state or province of the address."
+      BusinessPostalCode:
+        type: "string"
+        description: "For the business address, the postal code or zip code of the\
+          \ address."
+      BusinessCountry:
+        type: "string"
+        description: "For the business address, country of the address, if present\
+          \ in the address.  If not included in the address it will be null."
+    example:
+      BusinessStreetNumber: "BusinessStreetNumber"
+      BusinessCity: "BusinessCity"
+      BusinessName: "BusinessName"
+      BusinessBuilding: "BusinessBuilding"
+      BusinessStreet: "BusinessStreet"
+      BusinessPostalCode: "BusinessPostalCode"
+      BusinessStateOrProvince: "BusinessStateOrProvince"
+      CountryCode: "CountryCode"
+      BusinessCountry: "BusinessCountry"
+      VatNumber: "VatNumber"
+      BusinessAddress: "BusinessAddress"
+      IsValid: true
