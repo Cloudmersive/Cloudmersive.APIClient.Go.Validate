@@ -1,6 +1,4 @@
 ﻿{
-"projectName" : "cloudmersive_validate_api_client",
-  "packageName" : "cloudmersive_validate_api_client",
-  "packageVersion": "2.0.1",
-  "packageUrl": "https://www.cloudmersive.com/validate-api"
+  "packageName" : "Go-CloudmersiveValidateApiClient",
+  "packageVersion": "2.0.1"
 }  
