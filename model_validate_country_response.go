@@ -21,6 +21,8 @@ type ValidateCountryResponse struct {
 	FIPSTwoLetterCode string `json:"FIPSTwoLetterCode,omitempty"`
 	// Three-letter ISO 3166-1 country code
 	ThreeLetterCode string `json:"ThreeLetterCode,omitempty"`
+	// True if this country is currently a member of the European Union (EU), false otherwise
+	IsEuropeanUnionMember bool `json:"IsEuropeanUnionMember,omitempty"`
 	// Time zones (IANA/Olsen) in the country
 	Timezones []Timezone `json:"Timezones,omitempty"`
 }
