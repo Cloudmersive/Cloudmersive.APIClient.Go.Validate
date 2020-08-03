@@ -75,6 +75,71 @@ paths:
             $ref: "#/definitions/ValidateAddressResponse"
       security:
       - Apikey: []
+  /validate/address/city:
+    post:
+      tags:
+      - "Address"
+      summary: "Validate a City and State/Province combination, get location information\
+        \ about it"
+      description: "Checks if the input city and state name or code is valid, and\
+        \ returns information about it such as normalized City name, State name and\
+        \ more."
+      operationId: "Address_ValidateCity"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input parse request"
+        required: true
+        schema:
+          $ref: "#/definitions/ValidateCityRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ValidateCityResponse"
+      security:
+      - Apikey: []
+  /validate/address/state:
+    post:
+      tags:
+      - "Address"
+      summary: "Validate a state or province, name or abbreviation, get location information\
+        \ about it"
+      description: "Checks if the input state name or code is valid, and returns information\
+        \ about it such as normalized State name and more."
+      operationId: "Address_ValidateState"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input parse request"
+        required: true
+        schema:
+          $ref: "#/definitions/ValidateStateRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ValidateStateResponse"
+      security:
+      - Apikey: []
   /validate/address/postal-code:
     post:
       tags:
@@ -137,6 +202,28 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/ValidateCountryResponse"
+      security:
+      - Apikey: []
+  /validate/address/country/list:
+    post:
+      tags:
+      - "Address"
+      summary: "Get a list of ISO 3166-1 countries"
+      description: "Enumerates the list of ISO 3166-1 countries, including name, country\
+        \ codes, and more."
+      operationId: "Address_CountryList"
+      consumes: []
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters: []
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CountryListResult"
       security:
       - Apikey: []
   /validate/address/country/check-eu-membership:
@@ -886,13 +973,119 @@ definitions:
       ValidAddress: true
       Latitude: 0.8008281904610115
       Longitude: 6.027456183070403
+  ValidateCityRequest:
+    type: "object"
+    properties:
+      City:
+        type: "string"
+        description: "Required: City of the address to validate, such as 'San Francisco'\
+          \ or 'London'"
+      StateOrProvince:
+        type: "string"
+        description: "Required: State or province of the address to validate, such\
+          \ as 'California' or 'CA'"
+      CountryFullName:
+        type: "string"
+        description: "Optional (recommended); Name of the country, such as 'United\
+          \ States'.  If left blank, and CountryCode is also left blank, will default\
+          \ to United States.  Global countries are supported."
+      CountryCode:
+        type: "string"
+        description: "Optional; two-letter country code (Two-letter ISO 3166-1 country\
+          \ code) of the country.  If left blank, and CountryFullName is also left\
+          \ blank, will default to United States.  Global countries are supported."
+    description: "Request to Validate a City and State or Province in a country"
+    example:
+      StateOrProvince: "StateOrProvince"
+      CountryFullName: "CountryFullName"
+      City: "City"
+      CountryCode: "CountryCode"
+  ValidateCityResponse:
+    type: "object"
+    properties:
+      ValidCity:
+        type: "boolean"
+        description: "True if the city is valid, false otherwise"
+      City:
+        type: "string"
+        description: "If valid, City corresponding to the input postal code, such\
+          \ as 'Walnut Creek'"
+      StateOrProvince:
+        type: "string"
+        description: "If valid; State or province corresponding to the input state\
+          \ name, such as 'CA' or 'California'"
+      Latitude:
+        type: "number"
+        format: "double"
+        description: "If the postal code is valid, the degrees latitude of the centroid\
+          \ of the state, null otherwise"
+      Longitude:
+        type: "number"
+        format: "double"
+        description: "If the postal code is valid, the degrees longitude of the centroid\
+          \ of the state, null otherwise"
+    description: "Result of validating a city"
+    example:
+      StateOrProvince: "StateOrProvince"
+      ValidCity: true
+      Latitude: 0.8008281904610115
+      City: "City"
+      Longitude: 6.027456183070403
+  ValidateStateRequest:
+    type: "object"
+    properties:
+      StateOrProvince:
+        type: "string"
+        description: "Required: State or province of the address to validate, such\
+          \ as 'California' or 'CA'"
+      CountryFullName:
+        type: "string"
+        description: "Optional (recommended); Name of the country, such as 'United\
+          \ States'.  If left blank, and CountryCode is also left blank, will default\
+          \ to United States.  Global countries are supported."
+      CountryCode:
+        type: "string"
+        description: "Optional; two-letter country code (Two-letter ISO 3166-1 country\
+          \ code) of the country.  If left blank, and CountryFullName is also left\
+          \ blank, will default to United States.  Global countries are supported."
+    description: "Request to Validate a State or Province in a country"
+    example:
+      StateOrProvince: "StateOrProvince"
+      CountryFullName: "CountryFullName"
+      CountryCode: "CountryCode"
+  ValidateStateResponse:
+    type: "object"
+    properties:
+      ValidState:
+        type: "boolean"
+        description: "True if the address is valid, false otherwise"
+      StateOrProvince:
+        type: "string"
+        description: "If valid; State or province corresponding to the input state\
+          \ name, such as 'CA' or 'California'"
+      Latitude:
+        type: "number"
+        format: "double"
+        description: "If the postal code is valid, the degrees latitude of the centroid\
+          \ of the state, null otherwise"
+      Longitude:
+        type: "number"
+        format: "double"
+        description: "If the postal code is valid, the degrees longitude of the centroid\
+          \ of the state, null otherwise"
+    description: "Result of validating a state"
+    example:
+      ValidState: true
+      StateOrProvince: "StateOrProvince"
+      Latitude: 0.8008281904610115
+      Longitude: 6.027456183070403
   ValidatePostalCodeRequest:
     type: "object"
     properties:
       PostalCode:
         type: "string"
-        description: "Optional (recommended); Zip code or postal code of the address\
-          \ to validate, such as '94597'"
+        description: "Required: Zip code or postal code of the address to validate,\
+          \ such as '94597'"
       CountryFullName:
         type: "string"
         description: "Optional (recommended); Name of the country, such as 'United\
@@ -913,7 +1106,7 @@ definitions:
     properties:
       ValidPostalCode:
         type: "boolean"
-        description: "True if the address is valid, false otherwise"
+        description: "True if the Postal Code is valid, false otherwise"
       City:
         type: "string"
         description: "If valid, City corresponding to the input postal code, such\
@@ -1009,6 +1202,51 @@ definitions:
       BaseUTCOffset: "BaseUTCOffset"
       Now: "2000-01-23T04:56:07.000+00:00"
       Name: "Name"
+  CountryListResult:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if the operation was successful, false otherwise"
+      Countries:
+        type: "array"
+        description: "List of current ISO 3166-1 countries in the world"
+        items:
+          $ref: "#/definitions/CountryDetails"
+    description: "Result of enumerating available countries"
+    example:
+      Countries:
+      - CountryName: "CountryName"
+        ThreeLetterCode: "ThreeLetterCode"
+        ISOTwoLetterCode: "ISOTwoLetterCode"
+        IsEuropeanUnionMember: true
+      - CountryName: "CountryName"
+        ThreeLetterCode: "ThreeLetterCode"
+        ISOTwoLetterCode: "ISOTwoLetterCode"
+        IsEuropeanUnionMember: true
+      Successful: true
+  CountryDetails:
+    type: "object"
+    properties:
+      CountryName:
+        type: "string"
+        description: "Name of the country"
+      ThreeLetterCode:
+        type: "string"
+        description: "Three-letter ISO 3166-1 country code"
+      ISOTwoLetterCode:
+        type: "string"
+        description: "Two-letter ISO 3166-1 country code"
+      IsEuropeanUnionMember:
+        type: "boolean"
+        description: "True if this country is currently a member of the European Union\
+          \ (EU), false otherwise"
+    description: "Details of one country"
+    example:
+      CountryName: "CountryName"
+      ThreeLetterCode: "ThreeLetterCode"
+      ISOTwoLetterCode: "ISOTwoLetterCode"
+      IsEuropeanUnionMember: true
   GetTimezonesRequest:
     type: "object"
     properties:

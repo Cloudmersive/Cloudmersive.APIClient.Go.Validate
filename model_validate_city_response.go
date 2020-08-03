@@ -9,16 +9,16 @@
 
 package Go-CloudmersiveValidateApiClient
 
-// Result of validating a postal code
-type ValidatePostalCodeResponse struct {
-	// True if the Postal Code is valid, false otherwise
-	ValidPostalCode bool `json:"ValidPostalCode,omitempty"`
+// Result of validating a city
+type ValidateCityResponse struct {
+	// True if the city is valid, false otherwise
+	ValidCity bool `json:"ValidCity,omitempty"`
 	// If valid, City corresponding to the input postal code, such as 'Walnut Creek'
 	City string `json:"City,omitempty"`
-	// If valid; State or province corresponding to the input postal code, such as 'CA' or 'California'
+	// If valid; State or province corresponding to the input state name, such as 'CA' or 'California'
 	StateOrProvince string `json:"StateOrProvince,omitempty"`
-	// If the postal code is valid, the degrees latitude of the centroid of the postal code, null otherwise
+	// If the postal code is valid, the degrees latitude of the centroid of the state, null otherwise
 	Latitude float64 `json:"Latitude,omitempty"`
-	// If the postal code is valid, the degrees longitude of the centroid of the postal code, null otherwise
+	// If the postal code is valid, the degrees longitude of the centroid of the state, null otherwise
 	Longitude float64 `json:"Longitude,omitempty"`
 }
