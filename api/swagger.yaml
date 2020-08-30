@@ -555,6 +555,40 @@ paths:
             $ref: "#/definitions/GeolocateResponse"
       security:
       - Apikey: []
+  /validate/ip/is-tor-node:
+    post:
+      tags:
+      - "IPAddress"
+      summary: "Check if IP address is a Tor node server"
+      description: "Check if the input IP address is a Tor exit node server.  Tor\
+        \ servers are a type of privacy-preserving technology that can hide the original\
+        \ IP address who makes a request."
+      operationId: "IPAddress_IsTorNode"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "IP address to check, e.g. \"55.55.55.55\".  The input is a string\
+          \ so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/TorNodeResponse"
+      security:
+      - Apikey: []
   /validate/lead-enrichment/lead/enrich:
     post:
       tags:
@@ -1569,6 +1603,15 @@ definitions:
       City: "City"
       CountryCode: "CountryCode"
       Longitude: 6.027456183070403
+  TorNodeResponse:
+    type: "object"
+    properties:
+      IsTorNode:
+        type: "boolean"
+        description: "True if the input IP address is a Tor exit node, false otherwise"
+    description: "Result of performing a Tor node check on an IP address"
+    example:
+      IsTorNode: true
   LeadEnrichmentRequest:
     type: "object"
     properties:
