@@ -257,6 +257,38 @@ paths:
             $ref: "#/definitions/ValidateCountryResponse"
       security:
       - Apikey: []
+  /validate/address/country/get-currency:
+    post:
+      tags:
+      - "Address"
+      summary: "Get the currency of the input country"
+      description: "Gets the currency information for the input country, including\
+        \ the ISO three-letter country code, currency symbol, and English currency\
+        \ name."
+      operationId: "Address_GetCountryCurrency"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input request"
+        required: true
+        schema:
+          $ref: "#/definitions/ValidateCountryRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ValidateCountryResponse"
+      security:
+      - Apikey: []
   /validate/address/country/get-timezones:
     post:
       tags:
@@ -1237,6 +1269,15 @@ definitions:
         description: "Time zones (IANA/Olsen) in the country"
         items:
           $ref: "#/definitions/Timezone"
+      ISOCurrencyCode:
+        type: "string"
+        description: "ISO 4217 currency three-letter code associated with the country"
+      CurrencySymbol:
+        type: "string"
+        description: "Symbol associated with the currency"
+      CurrencyEnglishName:
+        type: "string"
+        description: "Full name of the currency"
     description: "Result of performing a country validation operation"
     example:
       FIPSTwoLetterCode: "FIPSTwoLetterCode"
@@ -1247,11 +1288,14 @@ definitions:
       - BaseUTCOffset: "BaseUTCOffset"
         Now: "2000-01-23T04:56:07.000+00:00"
         Name: "Name"
+      ISOCurrencyCode: "ISOCurrencyCode"
+      CurrencyEnglishName: "CurrencyEnglishName"
       CountryFullName: "CountryFullName"
       ThreeLetterCode: "ThreeLetterCode"
       ISOTwoLetterCode: "ISOTwoLetterCode"
       Successful: true
       IsEuropeanUnionMember: true
+      CurrencySymbol: "CurrencySymbol"
   Timezone:
     type: "object"
     properties:
@@ -1284,14 +1328,20 @@ definitions:
     description: "Result of enumerating available countries"
     example:
       Countries:
-      - CountryName: "CountryName"
+      - ISOCurrencyCode: "ISOCurrencyCode"
+        CountryName: "CountryName"
+        CurrencyEnglishName: "CurrencyEnglishName"
         ThreeLetterCode: "ThreeLetterCode"
         ISOTwoLetterCode: "ISOTwoLetterCode"
         IsEuropeanUnionMember: true
-      - CountryName: "CountryName"
+        CurrencySymbol: "CurrencySymbol"
+      - ISOCurrencyCode: "ISOCurrencyCode"
+        CountryName: "CountryName"
+        CurrencyEnglishName: "CurrencyEnglishName"
         ThreeLetterCode: "ThreeLetterCode"
         ISOTwoLetterCode: "ISOTwoLetterCode"
         IsEuropeanUnionMember: true
+        CurrencySymbol: "CurrencySymbol"
       Successful: true
   CountryDetails:
     type: "object"
@@ -1309,12 +1359,24 @@ definitions:
         type: "boolean"
         description: "True if this country is currently a member of the European Union\
           \ (EU), false otherwise"
+      ISOCurrencyCode:
+        type: "string"
+        description: "ISO 4217 currency three-letter code associated with the country"
+      CurrencySymbol:
+        type: "string"
+        description: "Symbol associated with the currency"
+      CurrencyEnglishName:
+        type: "string"
+        description: "Full name of the currency"
     description: "Details of one country"
     example:
+      ISOCurrencyCode: "ISOCurrencyCode"
       CountryName: "CountryName"
+      CurrencyEnglishName: "CurrencyEnglishName"
       ThreeLetterCode: "ThreeLetterCode"
       ISOTwoLetterCode: "ISOTwoLetterCode"
       IsEuropeanUnionMember: true
+      CurrencySymbol: "CurrencySymbol"
   GetTimezonesRequest:
     type: "object"
     properties:

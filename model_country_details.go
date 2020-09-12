@@ -19,4 +19,10 @@ type CountryDetails struct {
 	ISOTwoLetterCode string `json:"ISOTwoLetterCode,omitempty"`
 	// True if this country is currently a member of the European Union (EU), false otherwise
 	IsEuropeanUnionMember bool `json:"IsEuropeanUnionMember,omitempty"`
+	// ISO 4217 currency three-letter code associated with the country
+	ISOCurrencyCode string `json:"ISOCurrencyCode,omitempty"`
+	// Symbol associated with the currency
+	CurrencySymbol string `json:"CurrencySymbol,omitempty"`
+	// Full name of the currency
+	CurrencyEnglishName string `json:"CurrencyEnglishName,omitempty"`
 }
