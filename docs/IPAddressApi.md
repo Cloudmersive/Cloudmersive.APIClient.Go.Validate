@@ -4,9 +4,38 @@ All URIs are relative to *https://api.cloudmersive.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**IPAddressIsThreat**](IPAddressApi.md#IPAddressIsThreat) | **Post** /validate/ip/is-threat | Check if IP address is a known threat
 [**IPAddressIsTorNode**](IPAddressApi.md#IPAddressIsTorNode) | **Post** /validate/ip/is-tor-node | Check if IP address is a Tor node server
 [**IPAddressPost**](IPAddressApi.md#IPAddressPost) | **Post** /validate/ip/geolocate | Geolocate an IP address
 
+
+# **IPAddressIsThreat**
+> IpThreatResponse IPAddressIsThreat(ctx, value)
+Check if IP address is a known threat
+
+Check if the input IP address is a known threat IP address.  Checks against known bad IPs, botnets, compromised servers, and other lists of threats.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **value** | **string**| IP address to check, e.g. \&quot;55.55.55.55\&quot;.  The input is a string so be sure to enclose it in double-quotes. | 
+
+### Return type
+
+[**IpThreatResponse**](IPThreatResponse.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: text/javascript, application/json, text/json
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **IPAddressIsTorNode**
 > TorNodeResponse IPAddressIsTorNode(ctx, value)

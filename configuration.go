@@ -62,7 +62,7 @@ func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		BasePath:      "https://api.cloudmersive.com",
 		DefaultHeader: make(map[string]string),
-		UserAgent:     "Swagger-Codegen/3.0.4/go",
+		UserAgent:     "Swagger-Codegen/3.0.5/go",
 	}
 	return cfg
 }

@@ -539,7 +539,7 @@ func (a *AddressApiService) AddressParseString(ctx context.Context, input ParseA
 
 /* 
 AddressApiService Validate a street address
-Determines if an input structured street address is valid or invalid.  If the address is valid, also returns the latitude and longitude of the address.
+Determines if an input structured street address is valid or invalid.  If the address is valid, also returns the latitude and longitude of the address.  Supports all major international addresses.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param input Input parse request
 
@@ -642,7 +642,7 @@ func (a *AddressApiService) AddressValidateAddress(ctx context.Context, input Va
 
 /* 
 AddressApiService Validate a City and State/Province combination, get location information about it
-Checks if the input city and state name or code is valid, and returns information about it such as normalized City name, State name and more.
+Checks if the input city and state name or code is valid, and returns information about it such as normalized City name, State name and more.  Supports all major international addresses.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param input Input parse request
 
@@ -745,7 +745,7 @@ func (a *AddressApiService) AddressValidateCity(ctx context.Context, input Valid
 
 /* 
 AddressApiService Validate a postal code, get location information about it
-Checks if the input postal code is valid, and returns information about it such as City, State and more.
+Checks if the input postal code is valid, and returns information about it such as City, State and more.  Supports all major countries.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param input Input parse request
 
@@ -848,7 +848,7 @@ func (a *AddressApiService) AddressValidatePostalCode(ctx context.Context, input
 
 /* 
 AddressApiService Validate a state or province, name or abbreviation, get location information about it
-Checks if the input state name or code is valid, and returns information about it such as normalized State name and more.
+Checks if the input state name or code is valid, and returns information about it such as normalized State name and more.  Supports all major countries.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param input Input parse request
 

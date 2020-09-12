@@ -50,7 +50,7 @@ paths:
       summary: "Validate a street address"
       description: "Determines if an input structured street address is valid or invalid.\
         \  If the address is valid, also returns the latitude and longitude of the\
-        \ address."
+        \ address.  Supports all major international addresses."
       operationId: "Address_ValidateAddress"
       consumes:
       - "application/json"
@@ -83,7 +83,7 @@ paths:
         \ about it"
       description: "Checks if the input city and state name or code is valid, and\
         \ returns information about it such as normalized City name, State name and\
-        \ more."
+        \ more.  Supports all major international addresses."
       operationId: "Address_ValidateCity"
       consumes:
       - "application/json"
@@ -115,7 +115,7 @@ paths:
       summary: "Validate a state or province, name or abbreviation, get location information\
         \ about it"
       description: "Checks if the input state name or code is valid, and returns information\
-        \ about it such as normalized State name and more."
+        \ about it such as normalized State name and more.  Supports all major countries."
       operationId: "Address_ValidateState"
       consumes:
       - "application/json"
@@ -146,7 +146,7 @@ paths:
       - "Address"
       summary: "Validate a postal code, get location information about it"
       description: "Checks if the input postal code is valid, and returns information\
-        \ about it such as City, State and more."
+        \ about it such as City, State and more.  Supports all major countries."
       operationId: "Address_ValidatePostalCode"
       consumes:
       - "application/json"
@@ -553,6 +553,40 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/GeolocateResponse"
+      security:
+      - Apikey: []
+  /validate/ip/is-threat:
+    post:
+      tags:
+      - "IPAddress"
+      summary: "Check if IP address is a known threat"
+      description: "Check if the input IP address is a known threat IP address.  Checks\
+        \ against known bad IPs, botnets, compromised servers, and other lists of\
+        \ threats."
+      operationId: "IPAddress_IsThreat"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "IP address to check, e.g. \"55.55.55.55\".  The input is a string\
+          \ so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/IPThreatResponse"
       security:
       - Apikey: []
   /validate/ip/is-tor-node:
@@ -1603,6 +1637,20 @@ definitions:
       City: "City"
       CountryCode: "CountryCode"
       Longitude: 6.027456183070403
+  IPThreatResponse:
+    type: "object"
+    properties:
+      IsThreat:
+        type: "boolean"
+        description: "True if the input IP address is a threat, false otherwise"
+      ThreatType:
+        type: "string"
+        description: "Specifies the type of IP threat; possible values include Blocklist,\
+          \ Botnet, WebBot"
+    description: "Result of performing a IP threat check on an IP address"
+    example:
+      ThreatType: "ThreatType"
+      IsThreat: true
   TorNodeResponse:
     type: "object"
     properties:
