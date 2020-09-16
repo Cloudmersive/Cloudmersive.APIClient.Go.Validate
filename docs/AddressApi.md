@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**AddressCountry**](AddressApi.md#AddressCountry) | **Post** /validate/address/country | Validate and normalize country information, return ISO 3166-1 country codes and country name
 [**AddressCountryList**](AddressApi.md#AddressCountryList) | **Post** /validate/address/country/list | Get a list of ISO 3166-1 countries
 [**AddressGetCountryCurrency**](AddressApi.md#AddressGetCountryCurrency) | **Post** /validate/address/country/get-currency | Get the currency of the input country
+[**AddressGetCountryRegion**](AddressApi.md#AddressGetCountryRegion) | **Post** /validate/address/country/get-region | Get the region, subregion and continent of the country
 [**AddressGetTimezone**](AddressApi.md#AddressGetTimezone) | **Post** /validate/address/country/get-timezones | Gets IANA/Olsen time zones for a country
 [**AddressParseString**](AddressApi.md#AddressParseString) | **Post** /validate/address/parse | Parse an unstructured input text string into an international, formatted address
 [**AddressValidateAddress**](AddressApi.md#AddressValidateAddress) | **Post** /validate/address/street-address | Validate a street address
@@ -101,6 +102,34 @@ This endpoint does not need any parameter.
 Get the currency of the input country
 
 Gets the currency information for the input country, including the ISO three-letter country code, currency symbol, and English currency name.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **input** | [**ValidateCountryRequest**](ValidateCountryRequest.md)| Input request | 
+
+### Return type
+
+[**ValidateCountryResponse**](ValidateCountryResponse.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **AddressGetCountryRegion**
+> ValidateCountryResponse AddressGetCountryRegion(ctx, input)
+Get the region, subregion and continent of the country
+
+Gets the continent information including region and subregion for the input country.
 
 ### Required Parameters
 

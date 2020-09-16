@@ -289,6 +289,37 @@ paths:
             $ref: "#/definitions/ValidateCountryResponse"
       security:
       - Apikey: []
+  /validate/address/country/get-region:
+    post:
+      tags:
+      - "Address"
+      summary: "Get the region, subregion and continent of the country"
+      description: "Gets the continent information including region and subregion\
+        \ for the input country."
+      operationId: "Address_GetCountryRegion"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input request"
+        required: true
+        schema:
+          $ref: "#/definitions/ValidateCountryRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ValidateCountryResponse"
+      security:
+      - Apikey: []
   /validate/address/country/get-timezones:
     post:
       tags:
@@ -1278,8 +1309,21 @@ definitions:
       CurrencyEnglishName:
         type: "string"
         description: "Full name of the currency"
+      Region:
+        type: "string"
+        description: "Region (continent) in which the country is located; possible\
+          \ values are None, Europe, Americas, Asia, Africa, Oceania"
+      Subregion:
+        type: "string"
+        description: "Subregion in which the country is located; possible values are\
+          \ None, NorthernEurope, WesternEurope, SouthernEurope, EasternEurope, CentralAmerica,\
+          \ NorthernAmerica, SouthAmerica, EasternAfrica, MiddleAfrica, NorthernAfrica\
+          \ , SouthernAfrica , WesternAfrica , CentralAsia , EasternAsia , SouthernAsia\
+          \ , SouthEasternAsia , WesternAsia , Southern , Middle , AustraliaandNewZealand\
+          \ , Melanesia , Polynesia , Micronesia , Caribbean,"
     description: "Result of performing a country validation operation"
     example:
+      Subregion: "Subregion"
       FIPSTwoLetterCode: "FIPSTwoLetterCode"
       Timezones:
       - BaseUTCOffset: "BaseUTCOffset"
@@ -1291,6 +1335,7 @@ definitions:
       ISOCurrencyCode: "ISOCurrencyCode"
       CurrencyEnglishName: "CurrencyEnglishName"
       CountryFullName: "CountryFullName"
+      Region: "Region"
       ThreeLetterCode: "ThreeLetterCode"
       ISOTwoLetterCode: "ISOTwoLetterCode"
       Successful: true
@@ -1328,16 +1373,20 @@ definitions:
     description: "Result of enumerating available countries"
     example:
       Countries:
-      - ISOCurrencyCode: "ISOCurrencyCode"
+      - Subregion: "Subregion"
+        ISOCurrencyCode: "ISOCurrencyCode"
         CountryName: "CountryName"
         CurrencyEnglishName: "CurrencyEnglishName"
+        Region: "Region"
         ThreeLetterCode: "ThreeLetterCode"
         ISOTwoLetterCode: "ISOTwoLetterCode"
         IsEuropeanUnionMember: true
         CurrencySymbol: "CurrencySymbol"
-      - ISOCurrencyCode: "ISOCurrencyCode"
+      - Subregion: "Subregion"
+        ISOCurrencyCode: "ISOCurrencyCode"
         CountryName: "CountryName"
         CurrencyEnglishName: "CurrencyEnglishName"
+        Region: "Region"
         ThreeLetterCode: "ThreeLetterCode"
         ISOTwoLetterCode: "ISOTwoLetterCode"
         IsEuropeanUnionMember: true
@@ -1368,11 +1417,25 @@ definitions:
       CurrencyEnglishName:
         type: "string"
         description: "Full name of the currency"
+      Region:
+        type: "string"
+        description: "Region (continent) in which the country is located; possible\
+          \ values are None, Europe, Americas, Asia, Africa, Oceania"
+      Subregion:
+        type: "string"
+        description: "Subregion in which the country is located; possible values are\
+          \ None, NorthernEurope, WesternEurope, SouthernEurope, EasternEurope, CentralAmerica,\
+          \ NorthernAmerica, SouthAmerica, EasternAfrica, MiddleAfrica, NorthernAfrica\
+          \ , SouthernAfrica , WesternAfrica , CentralAsia , EasternAsia , SouthernAsia\
+          \ , SouthEasternAsia , WesternAsia , Southern , Middle , AustraliaandNewZealand\
+          \ , Melanesia , Polynesia , Micronesia , Caribbean,"
     description: "Details of one country"
     example:
+      Subregion: "Subregion"
       ISOCurrencyCode: "ISOCurrencyCode"
       CountryName: "CountryName"
       CurrencyEnglishName: "CurrencyEnglishName"
+      Region: "Region"
       ThreeLetterCode: "ThreeLetterCode"
       ISOTwoLetterCode: "ISOTwoLetterCode"
       IsEuropeanUnionMember: true

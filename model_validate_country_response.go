@@ -31,4 +31,8 @@ type ValidateCountryResponse struct {
 	CurrencySymbol string `json:"CurrencySymbol,omitempty"`
 	// Full name of the currency
 	CurrencyEnglishName string `json:"CurrencyEnglishName,omitempty"`
+	// Region (continent) in which the country is located; possible values are None, Europe, Americas, Asia, Africa, Oceania
+	Region string `json:"Region,omitempty"`
+	// Subregion in which the country is located; possible values are None, NorthernEurope, WesternEurope, SouthernEurope, EasternEurope, CentralAmerica, NorthernAmerica, SouthAmerica, EasternAfrica, MiddleAfrica, NorthernAfrica , SouthernAfrica , WesternAfrica , CentralAsia , EasternAsia , SouthernAsia , SouthEasternAsia , WesternAsia , Southern , Middle , AustraliaandNewZealand , Melanesia , Polynesia , Micronesia , Caribbean,
+	Subregion string `json:"Subregion,omitempty"`
 }
