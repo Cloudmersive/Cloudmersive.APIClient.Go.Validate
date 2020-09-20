@@ -384,6 +384,38 @@ paths:
             $ref: "#/definitions/CheckResponse"
       security:
       - Apikey: []
+  /validate/domain/quality-score:
+    post:
+      tags:
+      - "Domain"
+      summary: "Validate a domain name's quality score"
+      description: "Check the quality of a domain name.  Higher quality scores indicate\
+        \ more trust and authority in the domain name."
+      operationId: "Domain_QualityScore"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "domain"
+        description: "Domain name to check, for example \"cloudmersive.com\"."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Domain"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DomainQualityResponse"
+      security:
+      - Apikey: []
   /validate/domain/whois:
     post:
       tags:
@@ -1496,6 +1528,17 @@ definitions:
     description: "Result of a validation operation"
     example:
       ValidDomain: true
+  DomainQualityResponse:
+    type: "object"
+    properties:
+      DomainQualityScore:
+        type: "number"
+        format: "double"
+        description: "The quality score of the domain name; possible values are 0.0\
+          \ to 10.0 with 10.0 being the highest and 0.0 being the lowest quality."
+    description: "Result of performing a domain quality score operation"
+    example:
+      DomainQualityScore: 0.8008281904610115
   WhoisResponse:
     type: "object"
     properties:
