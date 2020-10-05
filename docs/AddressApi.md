@@ -7,10 +7,12 @@ Method | HTTP request | Description
 [**AddressCheckEUMembership**](AddressApi.md#AddressCheckEUMembership) | **Post** /validate/address/country/check-eu-membership | Check if a country is a member of the European Union (EU)
 [**AddressCountry**](AddressApi.md#AddressCountry) | **Post** /validate/address/country | Validate and normalize country information, return ISO 3166-1 country codes and country name
 [**AddressCountryList**](AddressApi.md#AddressCountryList) | **Post** /validate/address/country/list | Get a list of ISO 3166-1 countries
+[**AddressGeocode**](AddressApi.md#AddressGeocode) | **Post** /validate/address/geocode | Geocode a street address into latitude and longitude
 [**AddressGetCountryCurrency**](AddressApi.md#AddressGetCountryCurrency) | **Post** /validate/address/country/get-currency | Get the currency of the input country
 [**AddressGetCountryRegion**](AddressApi.md#AddressGetCountryRegion) | **Post** /validate/address/country/get-region | Get the region, subregion and continent of the country
 [**AddressGetTimezone**](AddressApi.md#AddressGetTimezone) | **Post** /validate/address/country/get-timezones | Gets IANA/Olsen time zones for a country
 [**AddressParseString**](AddressApi.md#AddressParseString) | **Post** /validate/address/parse | Parse an unstructured input text string into an international, formatted address
+[**AddressReverseGeocodeAddress**](AddressApi.md#AddressReverseGeocodeAddress) | **Post** /validate/address/geocode/reverse | Reverse geocode a lattitude and longitude into an address
 [**AddressValidateAddress**](AddressApi.md#AddressValidateAddress) | **Post** /validate/address/street-address | Validate a street address
 [**AddressValidateCity**](AddressApi.md#AddressValidateCity) | **Post** /validate/address/city | Validate a City and State/Province combination, get location information about it
 [**AddressValidatePostalCode**](AddressApi.md#AddressValidatePostalCode) | **Post** /validate/address/postal-code | Validate a postal code, get location information about it
@@ -93,6 +95,34 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **AddressGeocode**
+> ValidateAddressResponse AddressGeocode(ctx, input)
+Geocode a street address into latitude and longitude
+
+Geocodes a street address into latitude and longitude.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **input** | [**ValidateAddressRequest**](ValidateAddressRequest.md)| Input parse request | 
+
+### Return type
+
+[**ValidateAddressResponse**](ValidateAddressResponse.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json
  - **Accept**: application/json, text/json, application/xml, text/xml
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -197,6 +227,34 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ParseAddressResponse**](ParseAddressResponse.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **AddressReverseGeocodeAddress**
+> ReverseGeocodeAddressResponse AddressReverseGeocodeAddress(ctx, input)
+Reverse geocode a lattitude and longitude into an address
+
+Converts lattitude and longitude coordinates into an address through reverse-geocoding.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **input** | [**ReverseGeocodeAddressRequest**](ReverseGeocodeAddressRequest.md)| Input reverse geocoding request | 
+
+### Return type
+
+[**ReverseGeocodeAddressResponse**](ReverseGeocodeAddressResponse.md)
 
 ### Authorization
 

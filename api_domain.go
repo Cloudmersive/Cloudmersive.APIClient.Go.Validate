@@ -233,7 +233,7 @@ func (a *DomainApiService) DomainPost(ctx context.Context, domain string) (Whois
 
 /* 
 DomainApiService Validate a domain name&#39;s quality score
-Check the quality of a domain name.  Higher quality scores indicate more trust and authority in the domain name.
+Check the quality of a domain name.  Supports over 9 million domain names.  Higher quality scores indicate more trust and authority in the domain name, with values ranging from 0.0 (low quality) to 10.0 (maximum quality).
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param domain Domain name to check, for example \&quot;cloudmersive.com\&quot;.
 
