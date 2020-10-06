@@ -59,6 +59,8 @@ type APIClient struct {
 
 	PhoneNumberApi *PhoneNumberApiService
 
+	TextInputApi *TextInputApiService
+
 	UserAgentApi *UserAgentApiService
 
 	VatApi *VatApiService
@@ -87,6 +89,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LeadEnrichmentApi = (*LeadEnrichmentApiService)(&c.common)
 	c.NameApi = (*NameApiService)(&c.common)
 	c.PhoneNumberApi = (*PhoneNumberApiService)(&c.common)
+	c.TextInputApi = (*TextInputApiService)(&c.common)
 	c.UserAgentApi = (*UserAgentApiService)(&c.common)
 	c.VatApi = (*VatApiService)(&c.common)
 

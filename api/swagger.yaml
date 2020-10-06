@@ -712,6 +712,39 @@ paths:
             $ref: "#/definitions/GeolocateResponse"
       security:
       - Apikey: []
+  /validate/ip/geolocate/street-address:
+    post:
+      tags:
+      - "IPAddress"
+      summary: "Geolocate an IP address to a street address"
+      description: "Identify an IP address's street address.  Useful for security\
+        \ and UX applications."
+      operationId: "IPAddress_GeolocateStreetAddress"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "IP address to geolocate, e.g. \"55.55.55.55\".  The input is\
+          \ a string so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/GeolocateStreetAddressResponse"
+      security:
+      - Apikey: []
   /validate/ip/is-threat:
     post:
       tags:
@@ -995,6 +1028,71 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/PhoneNumberValidationResponse"
+      security:
+      - Apikey: []
+  /validate/text-input/check/xss:
+    post:
+      tags:
+      - "TextInput"
+      summary: "Check text input for Cross-Site-Scripting (XSS) attacks"
+      description: "Detects XSS (Cross-Site-Scripting) attacks from text input."
+      operationId: "TextInput_CheckXss"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "User-facing text input."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/XssProtectionResult"
+      security:
+      - Apikey: []
+  /validate/text-input/protect/xss:
+    post:
+      tags:
+      - "TextInput"
+      summary: "Protect text input from Cross-Site-Scripting (XSS) attacks through\
+        \ normalization"
+      description: "Detects and removes XSS (Cross-Site-Scripting) attacks from text\
+        \ input through normalization.  Returns the normalized result, as well as\
+        \ information on whether the original input contained an XSS risk."
+      operationId: "TextInput_ProtectXss"
+      consumes:
+      - "text/javascript"
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "User-facing text input."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/XssProtectionResult"
       security:
       - Apikey: []
   /validate/useragent/parse:
@@ -1918,6 +2016,35 @@ definitions:
       City: "City"
       CountryCode: "CountryCode"
       Longitude: 6.027456183070403
+  GeolocateStreetAddressResponse:
+    type: "object"
+    properties:
+      CountryCode:
+        type: "string"
+        description: "Two-letter country code of IP address"
+      CountryName:
+        type: "string"
+        description: "Country name of IP address"
+      StreetAddress:
+        type: "string"
+        description: "Street address of IP address"
+      City:
+        type: "string"
+        description: "City of IP address"
+      RegionName:
+        type: "string"
+        description: "State/region of IP address"
+      ZipCode:
+        type: "string"
+        description: "Zip or postal code of IP address"
+    description: "Geolocation street address result"
+    example:
+      StreetAddress: "StreetAddress"
+      CountryName: "CountryName"
+      RegionName: "RegionName"
+      ZipCode: "ZipCode"
+      City: "City"
+      CountryCode: "CountryCode"
   IPThreatResponse:
     type: "object"
     properties:
@@ -2352,6 +2479,27 @@ definitions:
       Successful: true
       PhoneNumberType: "PhoneNumberType"
       IsValid: true
+  XssProtectionResult:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if the operation was successful, false otherwise"
+      ContainedXss:
+        type: "boolean"
+        description: "True if the input contained XSS scripting, false otherwise"
+      OriginalInput:
+        type: "string"
+        description: "Original input string"
+      NormalizedResult:
+        type: "string"
+        description: "Normalized string result, with XSS removed"
+    description: "Result of performing an XSS protection operation"
+    example:
+      NormalizedResult: "NormalizedResult"
+      ContainedXss: true
+      Successful: true
+      OriginalInput: "OriginalInput"
   UserAgentValidateRequest:
     type: "object"
     properties:
