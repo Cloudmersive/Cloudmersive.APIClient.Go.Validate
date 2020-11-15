@@ -47,6 +47,8 @@ type APIClient struct {
 
 	AddressApi *AddressApiService
 
+	DateTimeApi *DateTimeApiService
+
 	DomainApi *DomainApiService
 
 	EmailApi *EmailApiService
@@ -83,6 +85,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.AddressApi = (*AddressApiService)(&c.common)
+	c.DateTimeApi = (*DateTimeApiService)(&c.common)
 	c.DomainApi = (*DomainApiService)(&c.common)
 	c.EmailApi = (*EmailApiService)(&c.common)
 	c.IPAddressApi = (*IPAddressApiService)(&c.common)

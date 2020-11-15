@@ -50,7 +50,7 @@ func (a *IPAddressApiService) IPAddressGeolocateStreetAddress(ctx context.Contex
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"text/javascript", "application/json", "text/json"}
+	localVarHttpContentTypes := []string{"application/json", "text/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -153,7 +153,7 @@ func (a *IPAddressApiService) IPAddressIsThreat(ctx context.Context, value strin
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"text/javascript", "application/json", "text/json"}
+	localVarHttpContentTypes := []string{"application/json", "text/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -256,7 +256,7 @@ func (a *IPAddressApiService) IPAddressIsTorNode(ctx context.Context, value stri
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"text/javascript", "application/json", "text/json"}
+	localVarHttpContentTypes := []string{"application/json", "text/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -359,7 +359,7 @@ func (a *IPAddressApiService) IPAddressPost(ctx context.Context, value string) (
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"text/javascript", "application/json", "text/json"}
+	localVarHttpContentTypes := []string{"application/json", "text/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)

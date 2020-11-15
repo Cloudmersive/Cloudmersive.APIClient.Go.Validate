@@ -75,6 +75,38 @@ paths:
             $ref: "#/definitions/ValidateAddressResponse"
       security:
       - Apikey: []
+  /validate/address/street-address/normalize:
+    post:
+      tags:
+      - "Address"
+      summary: "Normalize a street address"
+      description: "Normalizes an input structured street address is valid or invalid.\
+        \  If the address is valid, also returns the latitude and longitude of the\
+        \ address.  Supports all major international addresses."
+      operationId: "Address_NormalizeAddress"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input parse request"
+        required: true
+        schema:
+          $ref: "#/definitions/ValidateAddressRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/NormalizeAddressResponse"
+      security:
+      - Apikey: []
   /validate/address/city:
     post:
       tags:
@@ -411,6 +443,125 @@ paths:
             $ref: "#/definitions/ReverseGeocodeAddressResponse"
       security:
       - Apikey: []
+  /validate/date-time/get/now:
+    get:
+      tags:
+      - "DateTime"
+      summary: "Get current date and time as of now"
+      description: "Gets the current date and time.  Response time is syncronized\
+        \ with atomic clocks, and represents a monotonic, centrally available, consistent\
+        \ clock."
+      operationId: "DateTime_GetNowSimple"
+      consumes: []
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters: []
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DateTimeNowResult"
+      security:
+      - Apikey: []
+  /validate/date-time/get/holidays:
+    post:
+      tags:
+      - "DateTime"
+      summary: "Get public holidays in the specified country and year"
+      description: "Enumerates all public holidays in a given country for a given\
+        \ year.  Supports over 100 countries."
+      operationId: "DateTime_GetPublicHolidays"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input request"
+        required: true
+        schema:
+          $ref: "#/definitions/GetPublicHolidaysRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/PublicHolidaysResponse"
+      security:
+      - Apikey: []
+  /validate/date-time/parse/date-time/structured:
+    post:
+      tags:
+      - "DateTime"
+      summary: "Parses a standardized date and time string into a date and time"
+      description: "Parses a structured date and time string into a date time object.\
+        \  This is intended for standardized date strings that adhere to formatting\
+        \ conventions, rather than natural language input."
+      operationId: "DateTime_ParseStandardDateTime"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input request"
+        required: true
+        schema:
+          $ref: "#/definitions/DateTimeStandardizedParseRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DateTimeStandardizedParseResponse"
+      security:
+      - Apikey: []
+  /validate/date-time/parse/date-time/natural-language:
+    post:
+      tags:
+      - "DateTime"
+      summary: "Parses a free-form natural language date and time string into a date\
+        \ and time"
+      description: "Parses an unstructured, free-form, natural language date and time\
+        \ string into a date time object.  This is intended for lightweight human-entered\
+        \ input, such as \"tomorrow at 3pm\" or \"tuesday\"."
+      operationId: "DateTime_ParseNaturalLanguageDateTime"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "input"
+        description: "Input request"
+        required: true
+        schema:
+          $ref: "#/definitions/DateTimeNaturalLanguageParseRequest"
+        x-exportParamName: "Input"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/DateTimeStandardizedParseResponse"
+      security:
+      - Apikey: []
   /validate/domain/check:
     post:
       tags:
@@ -421,7 +572,6 @@ paths:
         \ name."
       operationId: "Domain_Check"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -455,7 +605,6 @@ paths:
         \ name, with values ranging from 0.0 (low quality) to 10.0 (maximum quality)."
       operationId: "Domain_QualityScore"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -488,7 +637,6 @@ paths:
         \ details of the domain name, such as information about the domain's owners."
       operationId: "Domain_Post"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -586,7 +734,6 @@ paths:
         \ via a limited local-only check.  Use the address/full API to do a full validation."
       operationId: "Email_Post"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -620,7 +767,6 @@ paths:
         \ not as comprehensive as address/full."
       operationId: "Email_AddressGetServers"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -655,7 +801,6 @@ paths:
         \ any emails."
       operationId: "Email_FullValidation"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -688,7 +833,6 @@ paths:
         \ Code, etc.  Useful for security and UX applications."
       operationId: "IPAddress_Post"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -721,7 +865,6 @@ paths:
         \ and UX applications."
       operationId: "IPAddress_GeolocateStreetAddress"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -755,7 +898,6 @@ paths:
         \ threats."
       operationId: "IPAddress_IsThreat"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -789,7 +931,6 @@ paths:
         \ IP address who makes a request."
       operationId: "IPAddress_IsTorNode"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -1038,7 +1179,6 @@ paths:
       description: "Detects XSS (Cross-Site-Scripting) attacks from text input."
       operationId: "TextInput_CheckXss"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -1072,7 +1212,6 @@ paths:
         \ information on whether the original input contained an XSS risk."
       operationId: "TextInput_ProtectXss"
       consumes:
-      - "text/javascript"
       - "application/json"
       - "text/json"
       produces:
@@ -1295,6 +1434,65 @@ definitions:
     example:
       ValidAddress: true
       Latitude: 0.8008281904610115
+      Longitude: 6.027456183070403
+  NormalizeAddressResponse:
+    type: "object"
+    properties:
+      ValidAddress:
+        type: "boolean"
+        description: "True if the address is valid, false otherwise"
+      Building:
+        type: "string"
+        description: "The name of the building, house or structure if applicable,\
+          \ such as \"Cloudmersive Building 2\".  This will often by null."
+      StreetNumber:
+        type: "string"
+        description: "The street number or house number of the address.  For example,\
+          \ in the address \"1600 Pennsylvania Avenue NW\" the street number would\
+          \ be \"1600\".  This value will typically be populated for most addresses."
+      Street:
+        type: "string"
+        description: "The name of the street or road of the address.  For example,\
+          \ in the address \"1600 Pennsylvania Avenue NW\" the street number would\
+          \ be \"Pennsylvania Avenue NW\"."
+      City:
+        type: "string"
+        description: "The city of the address."
+      StateOrProvince:
+        type: "string"
+        description: "The state or province of the address."
+      PostalCode:
+        type: "string"
+        description: "The postal code or zip code of the address."
+      CountryFullName:
+        type: "string"
+        description: "Country of the address, if present in the address.  If not included\
+          \ in the address it will be null."
+      ISOTwoLetterCode:
+        type: "string"
+        description: "Two-letter ISO 3166-1 country code"
+      Latitude:
+        type: "number"
+        format: "double"
+        description: "If the address is valid, the degrees latitude of the validated\
+          \ address, null otherwise"
+      Longitude:
+        type: "number"
+        format: "double"
+        description: "If the address is valid, the degrees longitude of the validated\
+          \ address, null otherwise"
+    description: "Result of validating a street address"
+    example:
+      ValidAddress: true
+      Building: "Building"
+      StateOrProvince: "StateOrProvince"
+      StreetNumber: "StreetNumber"
+      Street: "Street"
+      PostalCode: "PostalCode"
+      CountryFullName: "CountryFullName"
+      Latitude: 0.8008281904610115
+      City: "City"
+      ISOTwoLetterCode: "ISOTwoLetterCode"
       Longitude: 6.027456183070403
   ValidateCityRequest:
     type: "object"
@@ -1730,6 +1928,167 @@ definitions:
       City: "City"
       CountryCode: "CountryCode"
       Successful: true
+  DateTimeNowResult:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if successful, false otherwise"
+      Now:
+        type: "string"
+        format: "date-time"
+        description: "Current date, time, and time zone in standard JSON date format"
+      NowGmt:
+        type: "string"
+        format: "date-time"
+        description: "Current GMT-time-zone date, time, and time zone in standard\
+          \ JSON date format"
+    description: "Current date and time response"
+    example:
+      NowGmt: "2000-01-23T04:56:07.000+00:00"
+      Now: "2000-01-23T04:56:07.000+00:00"
+      Successful: true
+  GetPublicHolidaysRequest:
+    type: "object"
+    properties:
+      RawCountryInput:
+        type: "string"
+        description: "Two-letter code (FIPS 10-4 or ISO 3166-1) of the country; if\
+          \ not specified, defaults to United States"
+      Year:
+        type: "integer"
+        format: "int32"
+        description: "Optional - the year in which to retrieve the holidays; if left\
+          \ blank (0) it will default to the current year"
+    description: "Input parameter to a country validation request"
+    example:
+      Year: 0
+      RawCountryInput: "RawCountryInput"
+  PublicHolidaysResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if successful, false otherwise"
+      PublicHolidays:
+        type: "array"
+        description: "Public holidays in the requested country and year"
+        items:
+          $ref: "#/definitions/PublicHolidayOccurrence"
+    description: "Result of performing a get public holidays request operation"
+    example:
+      PublicHolidays:
+      - HolidayType: "HolidayType"
+        OccurrenceDate: "2000-01-23T04:56:07.000+00:00"
+        Nationwaide: true
+        EnglishName: "EnglishName"
+        LocalName: "LocalName"
+      - HolidayType: "HolidayType"
+        OccurrenceDate: "2000-01-23T04:56:07.000+00:00"
+        Nationwaide: true
+        EnglishName: "EnglishName"
+        LocalName: "LocalName"
+      Successful: true
+  PublicHolidayOccurrence:
+    type: "object"
+    properties:
+      EnglishName:
+        type: "string"
+        description: "Name of the holiday in English"
+      LocalName:
+        type: "string"
+        description: "Local name of the holiday"
+      OccurrenceDate:
+        type: "string"
+        format: "date-time"
+        description: "Date of the holiday (start time)"
+      HolidayType:
+        type: "string"
+        description: "Type of the holiday; possible values are: Public, Bank, School,\
+          \ Authorities, Optional, Observance"
+      Nationwaide:
+        type: "boolean"
+        description: "True if the holiday is celebrated in all locales in the country,\
+          \ false otherwise"
+    description: "Public holiday occurrence"
+    example:
+      HolidayType: "HolidayType"
+      OccurrenceDate: "2000-01-23T04:56:07.000+00:00"
+      Nationwaide: true
+      EnglishName: "EnglishName"
+      LocalName: "LocalName"
+  DateTimeStandardizedParseRequest:
+    type: "object"
+    properties:
+      RawDateTimeInput:
+        type: "string"
+        description: "Raw string input of a standard-formatted date and time for parsing"
+      CountryCode:
+        type: "string"
+        description: "Optional: specify the two-letter country code to optimzie date\
+          \ formatting; default is US"
+    description: "Input parameter to a date time parsing request"
+    example:
+      RawDateTimeInput: "RawDateTimeInput"
+      CountryCode: "CountryCode"
+  DateTimeStandardizedParseResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if successful, false otherwise"
+      ParsedDateResult:
+        type: "string"
+        format: "date-time"
+        description: "Result of performing a date time parsing"
+      Year:
+        type: "integer"
+        format: "int32"
+        description: "Year of the parsed date time result"
+      Month:
+        type: "integer"
+        format: "int32"
+        description: "Month of the parsed date time result"
+      Day:
+        type: "integer"
+        format: "int32"
+        description: "Day of the parsed date time result"
+      Hour:
+        type: "integer"
+        format: "int32"
+        description: "Hour of the parsed date time result (24-hour)"
+      Minute:
+        type: "integer"
+        format: "int32"
+        description: "Minute of the parsed date time result"
+      Second:
+        type: "integer"
+        format: "int32"
+        description: "Second of the parsed date time result"
+      DayOfWeek:
+        type: "string"
+        description: "Day of week"
+    description: "Result of performing a date time parsing"
+    example:
+      Month: 6
+      DayOfWeek: "DayOfWeek"
+      Year: 0
+      Minute: 5
+      Second: 2
+      Hour: 5
+      ParsedDateResult: "2000-01-23T04:56:07.000+00:00"
+      Successful: true
+      Day: 1
+  DateTimeNaturalLanguageParseRequest:
+    type: "object"
+    properties:
+      RawDateTimeInput:
+        type: "string"
+        description: "Raw string input of a natural language-formatted date and time\
+          \ for parsing"
+    description: "Input parameter to a date time parsing request"
+    example:
+      RawDateTimeInput: "RawDateTimeInput"
   CheckResponse:
     type: "object"
     properties:

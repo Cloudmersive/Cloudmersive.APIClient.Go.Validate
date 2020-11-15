@@ -50,7 +50,7 @@ func (a *EmailApiService) EmailAddressGetServers(ctx context.Context, email stri
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"text/javascript", "application/json", "text/json"}
+	localVarHttpContentTypes := []string{"application/json", "text/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -153,7 +153,7 @@ func (a *EmailApiService) EmailFullValidation(ctx context.Context, email string)
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"text/javascript", "application/json", "text/json"}
+	localVarHttpContentTypes := []string{"application/json", "text/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -256,7 +256,7 @@ func (a *EmailApiService) EmailPost(ctx context.Context, value string) (AddressV
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"text/javascript", "application/json", "text/json"}
+	localVarHttpContentTypes := []string{"application/json", "text/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)

@@ -50,7 +50,7 @@ func (a *TextInputApiService) TextInputCheckXss(ctx context.Context, value strin
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"text/javascript", "application/json", "text/json"}
+	localVarHttpContentTypes := []string{"application/json", "text/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -153,7 +153,7 @@ func (a *TextInputApiService) TextInputProtectXss(ctx context.Context, value str
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"text/javascript", "application/json", "text/json"}
+	localVarHttpContentTypes := []string{"application/json", "text/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)

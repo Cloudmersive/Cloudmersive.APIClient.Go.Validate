@@ -23,34 +23,33 @@ var (
 	_ context.Context
 )
 
-type DomainApiService service
+type DateTimeApiService service
 
 /* 
-DomainApiService Validate a domain name
-Check whether a domain name is valid or not.  API performs a live validation by contacting DNS services to validate the existence of the domain name.
+DateTimeApiService Get current date and time as of now
+Gets the current date and time.  Response time is syncronized with atomic clocks, and represents a monotonic, centrally available, consistent clock.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param domain Domain name to check, for example \&quot;cloudmersive.com\&quot;.  The input is a string so be sure to enclose it in double-quotes.
 
-@return CheckResponse
+@return DateTimeNowResult
 */
-func (a *DomainApiService) DomainCheck(ctx context.Context, domain string) (CheckResponse, *http.Response, error) {
+func (a *DateTimeApiService) DateTimeGetNowSimple(ctx context.Context) (DateTimeNowResult, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Post")
+		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue CheckResponse
+		localVarReturnValue DateTimeNowResult
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/validate/domain/check"
+	localVarPath := a.client.cfg.BasePath + "/validate/date-time/get/now"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json", "text/json"}
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -66,8 +65,6 @@ func (a *DomainApiService) DomainCheck(ctx context.Context, domain string) (Chec
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	// body params
-	localVarPostBody = &domain
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -112,7 +109,7 @@ func (a *DomainApiService) DomainCheck(ctx context.Context, domain string) (Chec
 		}
 		
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CheckResponse
+			var v DateTimeNowResult
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -129,24 +126,24 @@ func (a *DomainApiService) DomainCheck(ctx context.Context, domain string) (Chec
 }
 
 /* 
-DomainApiService Get WHOIS information for a domain
-Validate whether a domain name exists, and also return the full WHOIS record for that domain name.  WHOIS records include all the registration details of the domain name, such as information about the domain&#39;s owners.
+DateTimeApiService Get public holidays in the specified country and year
+Enumerates all public holidays in a given country for a given year.  Supports over 100 countries.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param domain Domain name to check, for example \&quot;cloudmersive.com\&quot;.   The input is a string so be sure to enclose it in double-quotes.
+ * @param input Input request
 
-@return WhoisResponse
+@return PublicHolidaysResponse
 */
-func (a *DomainApiService) DomainPost(ctx context.Context, domain string) (WhoisResponse, *http.Response, error) {
+func (a *DateTimeApiService) DateTimeGetPublicHolidays(ctx context.Context, input GetPublicHolidaysRequest) (PublicHolidaysResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue WhoisResponse
+		localVarReturnValue PublicHolidaysResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/validate/domain/whois"
+	localVarPath := a.client.cfg.BasePath + "/validate/date-time/get/holidays"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -170,7 +167,7 @@ func (a *DomainApiService) DomainPost(ctx context.Context, domain string) (Whois
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	localVarPostBody = &domain
+	localVarPostBody = &input
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -215,7 +212,7 @@ func (a *DomainApiService) DomainPost(ctx context.Context, domain string) (Whois
 		}
 		
 		if localVarHttpResponse.StatusCode == 200 {
-			var v WhoisResponse
+			var v PublicHolidaysResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -232,24 +229,24 @@ func (a *DomainApiService) DomainPost(ctx context.Context, domain string) (Whois
 }
 
 /* 
-DomainApiService Validate a domain name&#39;s quality score
-Check the quality of a domain name.  Supports over 9 million domain names.  Higher quality scores indicate more trust and authority in the domain name, with values ranging from 0.0 (low quality) to 10.0 (maximum quality).
+DateTimeApiService Parses a free-form natural language date and time string into a date and time
+Parses an unstructured, free-form, natural language date and time string into a date time object.  This is intended for lightweight human-entered input, such as \&quot;tomorrow at 3pm\&quot; or \&quot;tuesday\&quot;.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param domain Domain name to check, for example \&quot;cloudmersive.com\&quot;.
+ * @param input Input request
 
-@return DomainQualityResponse
+@return DateTimeStandardizedParseResponse
 */
-func (a *DomainApiService) DomainQualityScore(ctx context.Context, domain string) (DomainQualityResponse, *http.Response, error) {
+func (a *DateTimeApiService) DateTimeParseNaturalLanguageDateTime(ctx context.Context, input DateTimeNaturalLanguageParseRequest) (DateTimeStandardizedParseResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue DomainQualityResponse
+		localVarReturnValue DateTimeStandardizedParseResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/validate/domain/quality-score"
+	localVarPath := a.client.cfg.BasePath + "/validate/date-time/parse/date-time/natural-language"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -273,7 +270,7 @@ func (a *DomainApiService) DomainQualityScore(ctx context.Context, domain string
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	localVarPostBody = &domain
+	localVarPostBody = &input
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -318,7 +315,7 @@ func (a *DomainApiService) DomainQualityScore(ctx context.Context, domain string
 		}
 		
 		if localVarHttpResponse.StatusCode == 200 {
-			var v DomainQualityResponse
+			var v DateTimeStandardizedParseResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -335,24 +332,24 @@ func (a *DomainApiService) DomainQualityScore(ctx context.Context, domain string
 }
 
 /* 
-DomainApiService Validate a URL fully
-Validate whether a URL is syntactically valid (does not check endpoint for validity), whether it exists, and whether the endpoint is up and passes virus scan checks.  Accepts various types of input and produces a well-formed URL as output.
+DateTimeApiService Parses a standardized date and time string into a date and time
+Parses a structured date and time string into a date time object.  This is intended for standardized date strings that adhere to formatting conventions, rather than natural language input.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param request Input URL request
+ * @param input Input request
 
-@return ValidateUrlResponseFull
+@return DateTimeStandardizedParseResponse
 */
-func (a *DomainApiService) DomainUrlFull(ctx context.Context, request ValidateUrlRequestFull) (ValidateUrlResponseFull, *http.Response, error) {
+func (a *DateTimeApiService) DateTimeParseStandardDateTime(ctx context.Context, input DateTimeStandardizedParseRequest) (DateTimeStandardizedParseResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue ValidateUrlResponseFull
+		localVarReturnValue DateTimeStandardizedParseResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/validate/domain/url/full"
+	localVarPath := a.client.cfg.BasePath + "/validate/date-time/parse/date-time/structured"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -376,7 +373,7 @@ func (a *DomainApiService) DomainUrlFull(ctx context.Context, request ValidateUr
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	localVarPostBody = &request
+	localVarPostBody = &input
 	if ctx != nil {
 		// API Key Authentication
 		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
@@ -421,110 +418,7 @@ func (a *DomainApiService) DomainUrlFull(ctx context.Context, request ValidateUr
 		}
 		
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ValidateUrlResponseFull
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		
-		return localVarReturnValue, localVarHttpResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHttpResponse, nil
-}
-
-/* 
-DomainApiService Validate a URL syntactically
-Validate whether a URL is syntactically valid (does not check endpoint for validity).  Accepts various types of input and produces a well-formed URL as output.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param request Input URL information
-
-@return ValidateUrlResponseSyntaxOnly
-*/
-func (a *DomainApiService) DomainUrlSyntaxOnly(ctx context.Context, request ValidateUrlRequestSyntaxOnly) (ValidateUrlResponseSyntaxOnly, *http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		localVarReturnValue ValidateUrlResponseSyntaxOnly
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/validate/domain/url/syntax-only"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json", "text/json"}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json", "text/json", "application/xml", "text/xml"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	// body params
-	localVarPostBody = &request
-	if ctx != nil {
-		// API Key Authentication
-		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
-			var key string
-			if auth.Prefix != "" {
-				key = auth.Prefix + " " + auth.Key
-			} else {
-				key = auth.Key
-			}
-			localVarHeaderParams["Apikey"] = key
-			
-		}
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
-			return localVarReturnValue, localVarHttpResponse, err
-		}
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		
-		if localVarHttpResponse.StatusCode == 200 {
-			var v ValidateUrlResponseSyntaxOnly
+			var v DateTimeStandardizedParseResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
