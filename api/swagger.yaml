@@ -1234,6 +1234,38 @@ paths:
             $ref: "#/definitions/XssProtectionResult"
       security:
       - Apikey: []
+  /validate/text-input/check-and-protect/xss/batch:
+    post:
+      tags:
+      - "TextInput"
+      summary: "Check and protect multiple text inputs for Cross-Site-Scripting (XSS)\
+        \ attacks in batch"
+      description: "Detects XSS (Cross-Site-Scripting) attacks from multiple text\
+        \ input.  Output preverses order of input items."
+      operationId: "TextInput_CheckXssBatch"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "User-facing text input."
+        required: true
+        schema:
+          $ref: "#/definitions/XssProtectionBatchRequest"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/XssProtectionBatchResponse"
+      security:
+      - Apikey: []
   /validate/useragent/parse:
     post:
       tags:
@@ -2859,6 +2891,47 @@ definitions:
       ContainedXss: true
       Successful: true
       OriginalInput: "OriginalInput"
+  XssProtectionBatchRequest:
+    type: "object"
+    properties:
+      RequestItems:
+        type: "array"
+        description: "Multiple items to protect for XSS"
+        items:
+          $ref: "#/definitions/XssProtectionRequestItem"
+    description: "Input to a batch XSS protection operation"
+    example:
+      RequestItems:
+      - InputText: "InputText"
+      - InputText: "InputText"
+  XssProtectionRequestItem:
+    type: "object"
+    properties:
+      InputText:
+        type: "string"
+        description: "Individual input text item to protect from XSS"
+    description: "Individual item to protect for XSS"
+    example:
+      InputText: "InputText"
+  XssProtectionBatchResponse:
+    type: "object"
+    properties:
+      ResultItems:
+        type: "array"
+        description: "Results from performing a batch XSS protection operation"
+        items:
+          $ref: "#/definitions/XssProtectionResult"
+    description: "Result of performing a batch XSS protection operation"
+    example:
+      ResultItems:
+      - NormalizedResult: "NormalizedResult"
+        ContainedXss: true
+        Successful: true
+        OriginalInput: "OriginalInput"
+      - NormalizedResult: "NormalizedResult"
+        ContainedXss: true
+        Successful: true
+        OriginalInput: "OriginalInput"
   UserAgentValidateRequest:
     type: "object"
     properties:
