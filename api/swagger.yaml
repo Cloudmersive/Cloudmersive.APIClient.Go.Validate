@@ -954,6 +954,37 @@ paths:
             $ref: "#/definitions/TorNodeResponse"
       security:
       - Apikey: []
+  /validate/ip/reverse-domain-lookup:
+    post:
+      tags:
+      - "IPAddress"
+      summary: "Perform a reverse domain name (DNS) lookup on an IP address"
+      description: "Gets the domain name, if any, associated with the IP address."
+      operationId: "IPAddress_ReverseDomainLookup"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "IP address to check, e.g. \"55.55.55.55\".  The input is a string\
+          \ so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/IPReverseDNSLookupResponse"
+      security:
+      - Apikey: []
   /validate/lead-enrichment/lead/enrich:
     post:
       tags:
@@ -2459,6 +2490,20 @@ definitions:
     description: "Result of performing a Tor node check on an IP address"
     example:
       IsTorNode: true
+  IPReverseDNSLookupResponse:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if a domain was found, false otherwise"
+      HostName:
+        type: "string"
+        description: "Host name (fully-qualified) associated with the IP address,\
+          \ if any"
+    description: "Result of performing a Reverse Domain (DNS) lookup on an IP address"
+    example:
+      Successful: true
+      HostName: "HostName"
   LeadEnrichmentRequest:
     type: "object"
     properties:

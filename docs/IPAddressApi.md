@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**IPAddressIsThreat**](IPAddressApi.md#IPAddressIsThreat) | **Post** /validate/ip/is-threat | Check if IP address is a known threat
 [**IPAddressIsTorNode**](IPAddressApi.md#IPAddressIsTorNode) | **Post** /validate/ip/is-tor-node | Check if IP address is a Tor node server
 [**IPAddressPost**](IPAddressApi.md#IPAddressPost) | **Post** /validate/ip/geolocate | Geolocate an IP address
+[**IPAddressReverseDomainLookup**](IPAddressApi.md#IPAddressReverseDomainLookup) | **Post** /validate/ip/reverse-domain-lookup | Perform a reverse domain name (DNS) lookup on an IP address
 
 
 # **IPAddressGeolocateStreetAddress**
@@ -110,6 +111,34 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GeolocateResponse**](GeolocateResponse.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **IPAddressReverseDomainLookup**
+> IpReverseDnsLookupResponse IPAddressReverseDomainLookup(ctx, value)
+Perform a reverse domain name (DNS) lookup on an IP address
+
+Gets the domain name, if any, associated with the IP address.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **value** | **string**| IP address to check, e.g. \&quot;55.55.55.55\&quot;.  The input is a string so be sure to enclose it in double-quotes. | 
+
+### Return type
+
+[**IpReverseDnsLookupResponse**](IPReverseDNSLookupResponse.md)
 
 ### Authorization
 
