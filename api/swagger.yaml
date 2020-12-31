@@ -824,6 +824,39 @@ paths:
             $ref: "#/definitions/FullEmailValidationResponse"
       security:
       - Apikey: []
+  /validate/ip/intelligence:
+    post:
+      tags:
+      - "IPAddress"
+      summary: "Get intelligence on an IP address"
+      description: "Identify key intelligence about an IP address, including if it\
+        \ is a known threat IP, known bot, Tor exit node, as well as the location\
+        \ of the IP address."
+      operationId: "IPAddress_IpIntelligence"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "IP address to process, e.g. \"55.55.55.55\".  The input is a\
+          \ string so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/IPIntelligenceResponse"
+      security:
+      - Apikey: []
   /validate/ip/geolocate:
     post:
       tags:
@@ -952,6 +985,39 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/TorNodeResponse"
+      security:
+      - Apikey: []
+  /validate/ip/is-bot:
+    post:
+      tags:
+      - "IPAddress"
+      summary: "Check if IP address is a Bot client"
+      description: "Check if the input IP address is a Bot, robot, or otherwise a\
+        \ non-user entity.  Leverages real-time signals to check against known high-probability\
+        \ bots.."
+      operationId: "IPAddress_IsBot"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "IP address to check, e.g. \"55.55.55.55\".  The input is a string\
+          \ so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/BotCheckResponse"
       security:
       - Apikey: []
   /validate/ip/reverse-domain-lookup:
@@ -2395,6 +2461,62 @@ definitions:
       IsFreeEmailProvider: true
       Domain: "Domain"
       IsDisposable: true
+  IPIntelligenceResponse:
+    type: "object"
+    properties:
+      IsBot:
+        type: "boolean"
+        description: "True if the IP address is a known bot, otherwise false"
+      IsTorNode:
+        type: "boolean"
+        description: "True if the IP address is a known Tor exit node, otherwise false"
+      IsThreat:
+        type: "boolean"
+        description: "True if the IP address is a known threat IP, otherwise false"
+      IsEU:
+        type: "boolean"
+        description: "True if the IP address is in the European Union, otherwise false"
+      Location:
+        description: "Returns the location of the IP address"
+        $ref: "#/definitions/GeolocateResponse"
+      CurrencyCode:
+        type: "string"
+        description: "ISO 4217 currency code for the IP address location"
+      CurrencyName:
+        type: "string"
+        description: "Name of the currency in English"
+      RegionArea:
+        type: "string"
+        description: "Region (continent) in which the country is located; possible\
+          \ values are None, Europe, Americas, Asia, Africa, Oceania"
+      SubregionArea:
+        type: "string"
+        description: "Subregion in which the country is located; possible values are\
+          \ None, NorthernEurope, WesternEurope, SouthernEurope, EasternEurope, CentralAmerica,\
+          \ NorthernAmerica, SouthAmerica, EasternAfrica, MiddleAfrica, NorthernAfrica\
+          \ , SouthernAfrica , WesternAfrica , CentralAsia , EasternAsia , SouthernAsia\
+          \ , SouthEasternAsia , WesternAsia , Southern , Middle , AustraliaandNewZealand\
+          \ , Melanesia , Polynesia , Micronesia , Caribbean,"
+    description: "IP address intelligence result"
+    example:
+      CurrencyCode: "CurrencyCode"
+      IsTorNode: true
+      RegionArea: "RegionArea"
+      IsBot: true
+      IsEU: true
+      SubregionArea: "SubregionArea"
+      IsThreat: true
+      Location:
+        RegionCode: "RegionCode"
+        CountryName: "CountryName"
+        RegionName: "RegionName"
+        ZipCode: "ZipCode"
+        TimezoneStandardName: "TimezoneStandardName"
+        Latitude: 0.8008281904610115
+        City: "City"
+        CountryCode: "CountryCode"
+        Longitude: 6.027456183070403
+      CurrencyName: "CurrencyName"
   GeolocateResponse:
     type: "object"
     properties:
@@ -2427,7 +2549,8 @@ definitions:
         type: "number"
         format: "double"
         description: "Longitude of IP address"
-    description: "Geolocation result"
+    description: "Geolocation result of performing an IP address geolocation operation.\
+      \  This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com."
     example:
       RegionCode: "RegionCode"
       CountryName: "CountryName"
@@ -2490,6 +2613,15 @@ definitions:
     description: "Result of performing a Tor node check on an IP address"
     example:
       IsTorNode: true
+  BotCheckResponse:
+    type: "object"
+    properties:
+      IsBot:
+        type: "boolean"
+        description: "True if the input IP address is a Bot or Robot, false otherwise"
+    description: "Result of performing a Bot check on an IP address"
+    example:
+      IsBot: true
   IPReverseDNSLookupResponse:
     type: "object"
     properties:

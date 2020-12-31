@@ -9,7 +9,7 @@
 
 package Go-CloudmersiveValidateApiClient
 
-// Geolocation result
+// Geolocation result of performing an IP address geolocation operation.  This product includes GeoLite2 data created by MaxMind, available from www.maxmind.com.
 type GeolocateResponse struct {
 	// Two-letter country code of IP address
 	CountryCode string `json:"CountryCode,omitempty"`
