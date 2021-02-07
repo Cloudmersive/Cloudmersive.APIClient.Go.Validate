@@ -9,12 +9,8 @@
 
 package Go-CloudmersiveValidateApiClient
 
-// Result of validating a URL with syntax only
-type ValidateUrlResponseSyntaxOnly struct {
-	// True if the URL is valid, false otherwise
-	ValidURL bool `json:"ValidURL,omitempty"`
-	// Well-formed version of the URL
-	WellFormedURL string `json:"WellFormedURL,omitempty"`
-	// The top-level domain name of the URL, e.g. mydomain.com
-	TopLevelDomainName string `json:"TopLevelDomainName,omitempty"`
+// Result of performing SSRF threat checks on multiple URLs
+type UrlSsrfResponseBatch struct {
+	// Results of the operation, with indexes matched to input values
+	OutputItems []UrlSsrfResponseFull `json:"OutputItems,omitempty"`
 }

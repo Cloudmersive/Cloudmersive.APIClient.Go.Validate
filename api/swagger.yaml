@@ -725,6 +725,98 @@ paths:
             $ref: "#/definitions/ValidateUrlResponseFull"
       security:
       - Apikey: []
+  /validate/domain/url/get-top-level-domain:
+    post:
+      tags:
+      - "Domain"
+      summary: "Get top-level domain name from URL"
+      description: "Gets the top-level domain name from a URL, such as mydomain.com."
+      operationId: "Domain_GetTopLevelDomainFromUrl"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "Input URL information"
+        required: true
+        schema:
+          $ref: "#/definitions/ValidateUrlRequestSyntaxOnly"
+        x-exportParamName: "Request"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/ValidateUrlResponseSyntaxOnly"
+      security:
+      - Apikey: []
+  /validate/domain/url/ssrf-threat-check:
+    post:
+      tags:
+      - "Domain"
+      summary: "Check a URL for SSRF threats"
+      description: "Checks if an input URL is at risk of being an SSRF (Server-side\
+        \ request forgery) threat or attack."
+      operationId: "Domain_SsrfCheck"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "Input URL request"
+        required: true
+        schema:
+          $ref: "#/definitions/UrlSsrfRequestFull"
+        x-exportParamName: "Request"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UrlSsrfResponseFull"
+      security:
+      - Apikey: []
+  /validate/domain/url/ssrf-threat-check/batch:
+    post:
+      tags:
+      - "Domain"
+      summary: "Check a URL for SSRF threats in batches"
+      description: "Batch-checks if input URLs are at risk of being an SSRF (Server-side\
+        \ request forgery) threat or attack."
+      operationId: "Domain_SsrfCheckBatch"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "Input URL request as a batch of multiple URLs"
+        required: true
+        schema:
+          $ref: "#/definitions/UrlSsrfRequestBatch"
+        x-exportParamName: "Request"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UrlSsrfResponseBatch"
+      security:
+      - Apikey: []
   /validate/email/address/syntaxOnly:
     post:
       tags:
@@ -2324,9 +2416,13 @@ definitions:
       WellFormedURL:
         type: "string"
         description: "Well-formed version of the URL"
+      TopLevelDomainName:
+        type: "string"
+        description: "The top-level domain name of the URL, e.g. mydomain.com"
     description: "Result of validating a URL with syntax only"
     example:
       ValidURL: true
+      TopLevelDomainName: "TopLevelDomainName"
       WellFormedURL: "WellFormedURL"
   ValidateUrlRequestFull:
     type: "object"
@@ -2364,6 +2460,73 @@ definitions:
       Valid_Endpoint: true
       Valid_Domain: true
       WellFormedURL: "WellFormedURL"
+  UrlSsrfRequestFull:
+    type: "object"
+    properties:
+      URL:
+        type: "string"
+        description: "URL to validate"
+      BlockedDomains:
+        type: "array"
+        description: "Top level domains that you do not want to allow access to, e.g.\
+          \ mydomain.com - will block all subdomains as well"
+        items:
+          type: "string"
+    description: "Request to determine if a URL is an SSRF threat check"
+    example:
+      BlockedDomains:
+      - "BlockedDomains"
+      - "BlockedDomains"
+      URL: "URL"
+  UrlSsrfResponseFull:
+    type: "object"
+    properties:
+      CleanURL:
+        type: "boolean"
+        description: "True if the URL is clean, false if it is at risk of containing\
+          \ an SSRF threat or attack"
+      ThreatLevel:
+        type: "string"
+        description: "Threat level of the URL; possible values are High, Medium, Low\
+          \ and None"
+    description: "Result of checking a URL for SSRF threats"
+    example:
+      ThreatLevel: "ThreatLevel"
+      CleanURL: true
+  UrlSsrfRequestBatch:
+    type: "object"
+    properties:
+      InputItems:
+        type: "array"
+        description: "Input URLs to check for SSRF threats"
+        items:
+          $ref: "#/definitions/UrlSsrfRequestFull"
+    description: "Batch operation to perform SSRF threat checks on multiple URLs"
+    example:
+      InputItems:
+      - BlockedDomains:
+        - "BlockedDomains"
+        - "BlockedDomains"
+        URL: "URL"
+      - BlockedDomains:
+        - "BlockedDomains"
+        - "BlockedDomains"
+        URL: "URL"
+  UrlSsrfResponseBatch:
+    type: "object"
+    properties:
+      OutputItems:
+        type: "array"
+        description: "Results of the operation, with indexes matched to input values"
+        items:
+          $ref: "#/definitions/UrlSsrfResponseFull"
+    description: "Result of performing SSRF threat checks on multiple URLs"
+    example:
+      OutputItems:
+      - ThreatLevel: "ThreatLevel"
+        CleanURL: true
+      - ThreatLevel: "ThreatLevel"
+        CleanURL: true
   AddressVerifySyntaxOnlyResponse:
     type: "object"
     properties:
