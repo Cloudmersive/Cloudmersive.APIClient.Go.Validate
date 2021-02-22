@@ -755,6 +755,69 @@ paths:
             $ref: "#/definitions/ValidateUrlResponseSyntaxOnly"
       security:
       - Apikey: []
+  /validate/domain/url/phishing-threat-check:
+    post:
+      tags:
+      - "Domain"
+      summary: "Check a URL for Phishing threats"
+      description: "Checks if an input URL is at risk of being an Phishing (fake login\
+        \ page, or other page designed to collect information via social engineering)\
+        \ threat or attack."
+      operationId: "Domain_PhishingCheck"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "Input URL request"
+        required: true
+        schema:
+          $ref: "#/definitions/PhishingCheckRequest"
+        x-exportParamName: "Request"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/PhishingCheckResponse"
+      security:
+      - Apikey: []
+  /validate/domain/url/safety-threat-check:
+    post:
+      tags:
+      - "Domain"
+      summary: "Check a URL for safety threats"
+      description: "Checks if an input URL is at risk of being a safety threat through\
+        \ malware, unwanted software, or social engineering threats."
+      operationId: "Domain_SafetyCheck"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "Input URL request"
+        required: true
+        schema:
+          $ref: "#/definitions/UrlSafetyCheckRequestFull"
+        x-exportParamName: "Request"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/UrlSafetyCheckResponseFull"
+      security:
+      - Apikey: []
   /validate/domain/url/ssrf-threat-check:
     post:
       tags:
@@ -2460,6 +2523,54 @@ definitions:
       Valid_Endpoint: true
       Valid_Domain: true
       WellFormedURL: "WellFormedURL"
+  PhishingCheckRequest:
+    type: "object"
+    properties:
+      URL:
+        type: "string"
+        description: "URL to validate"
+    description: "Request to determine if a URL is a Phishing threat"
+    example:
+      URL: "URL"
+  PhishingCheckResponse:
+    type: "object"
+    properties:
+      CleanURL:
+        type: "boolean"
+        description: "True if the URL is clean, false if it is at risk of containing\
+          \ a Phishing threat or attack"
+      ThreatType:
+        type: "string"
+        description: "Threat type of the Phishing threat; possible values are VerifiedPhishingURL,\
+          \ UnverifiedPhishingURL, or VerifiedPhishingDomain"
+    description: "Result of checking a URL for Phishing threats"
+    example:
+      CleanURL: true
+      ThreatType: "ThreatType"
+  UrlSafetyCheckRequestFull:
+    type: "object"
+    properties:
+      URL:
+        type: "string"
+        description: "URL to validate"
+    description: "Request to determine if a URL is a safety threat check"
+    example:
+      URL: "URL"
+  UrlSafetyCheckResponseFull:
+    type: "object"
+    properties:
+      CleanURL:
+        type: "boolean"
+        description: "True if the URL is clean, false if it is at risk of containing\
+          \ a safety threat or attack"
+      ThreatType:
+        type: "string"
+        description: "Threat type identified, if any; possible values are \"ForcedDownload\"\
+          , \"VirusesAndMalware\", \"Phishing\""
+    description: "Result of checking a URL for safety threats"
+    example:
+      CleanURL: true
+      ThreatType: "ThreatType"
   UrlSsrfRequestFull:
     type: "object"
     properties:

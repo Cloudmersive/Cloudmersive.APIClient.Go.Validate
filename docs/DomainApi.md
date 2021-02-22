@@ -6,8 +6,10 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DomainCheck**](DomainApi.md#DomainCheck) | **Post** /validate/domain/check | Validate a domain name
 [**DomainGetTopLevelDomainFromUrl**](DomainApi.md#DomainGetTopLevelDomainFromUrl) | **Post** /validate/domain/url/get-top-level-domain | Get top-level domain name from URL
+[**DomainPhishingCheck**](DomainApi.md#DomainPhishingCheck) | **Post** /validate/domain/url/phishing-threat-check | Check a URL for Phishing threats
 [**DomainPost**](DomainApi.md#DomainPost) | **Post** /validate/domain/whois | Get WHOIS information for a domain
 [**DomainQualityScore**](DomainApi.md#DomainQualityScore) | **Post** /validate/domain/quality-score | Validate a domain name&#39;s quality score
+[**DomainSafetyCheck**](DomainApi.md#DomainSafetyCheck) | **Post** /validate/domain/url/safety-threat-check | Check a URL for safety threats
 [**DomainSsrfCheck**](DomainApi.md#DomainSsrfCheck) | **Post** /validate/domain/url/ssrf-threat-check | Check a URL for SSRF threats
 [**DomainSsrfCheckBatch**](DomainApi.md#DomainSsrfCheckBatch) | **Post** /validate/domain/url/ssrf-threat-check/batch | Check a URL for SSRF threats in batches
 [**DomainUrlFull**](DomainApi.md#DomainUrlFull) | **Post** /validate/domain/url/full | Validate a URL fully
@@ -70,6 +72,34 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **DomainPhishingCheck**
+> PhishingCheckResponse DomainPhishingCheck(ctx, request)
+Check a URL for Phishing threats
+
+Checks if an input URL is at risk of being an Phishing (fake login page, or other page designed to collect information via social engineering) threat or attack.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **request** | [**PhishingCheckRequest**](PhishingCheckRequest.md)| Input URL request | 
+
+### Return type
+
+[**PhishingCheckResponse**](PhishingCheckResponse.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **DomainPost**
 > WhoisResponse DomainPost(ctx, domain)
 Get WHOIS information for a domain
@@ -114,6 +144,34 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**DomainQualityResponse**](DomainQualityResponse.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **DomainSafetyCheck**
+> UrlSafetyCheckResponseFull DomainSafetyCheck(ctx, request)
+Check a URL for safety threats
+
+Checks if an input URL is at risk of being a safety threat through malware, unwanted software, or social engineering threats.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **request** | [**UrlSafetyCheckRequestFull**](UrlSafetyCheckRequestFull.md)| Input URL request | 
+
+### Return type
+
+[**UrlSafetyCheckResponseFull**](UrlSafetyCheckResponseFull.md)
 
 ### Authorization
 
