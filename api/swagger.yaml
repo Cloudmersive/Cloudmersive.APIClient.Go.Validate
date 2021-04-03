@@ -1423,6 +1423,78 @@ paths:
             $ref: "#/definitions/PhoneNumberValidationResponse"
       security:
       - Apikey: []
+  /validate/text-input/check/sql-injection:
+    post:
+      tags:
+      - "TextInput"
+      summary: "Check text input for SQL Injection (SQLI) attacks"
+      description: "Detects SQL Injection (SQLI) attacks from text input."
+      operationId: "TextInput_CheckSqlInjection"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "User-facing text input."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      - name: "detectionLevel"
+        in: "header"
+        description: "Set to Normal to target a high-security SQL Injection detection\
+          \ level with a very low false positive rate; select High to target a very-high\
+          \ security SQL Injection detection level with higher false positives.  Default\
+          \ is Normal (recommended)."
+        required: false
+        type: "string"
+        x-exportParamName: "DetectionLevel"
+        x-optionalDataType: "String"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SqlInjectionDetectionResult"
+      security:
+      - Apikey: []
+  /validate/text-input/check/sql-injection/batch:
+    post:
+      tags:
+      - "TextInput"
+      summary: "Check and protect multiple text inputs for SQL Injection (SQLI) attacks\
+        \ in batch"
+      description: "Detects SQL Injection (SQLI) attacks from multiple text inputs.\
+        \  Output preverses order of input items."
+      operationId: "TextInput_CheckSqlInjectionBatch"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "User-facing text input."
+        required: true
+        schema:
+          $ref: "#/definitions/SqlInjectionCheckBatchRequest"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SqlInjectionCheckBatchResponse"
+      security:
+      - Apikey: []
   /validate/text-input/check/xss:
     post:
       tags:
@@ -1493,7 +1565,7 @@ paths:
       summary: "Check and protect multiple text inputs for Cross-Site-Scripting (XSS)\
         \ attacks in batch"
       description: "Detects XSS (Cross-Site-Scripting) attacks from multiple text\
-        \ input.  Output preverses order of input items."
+        \ inputs.  Output preverses order of input items."
       operationId: "TextInput_CheckXssBatch"
       consumes:
       - "application/json"
@@ -3321,6 +3393,70 @@ definitions:
       Successful: true
       PhoneNumberType: "PhoneNumberType"
       IsValid: true
+  SqlInjectionDetectionResult:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if the operation was successful, false otherwise"
+      ContainedSqlInjectionAttack:
+        type: "boolean"
+        description: "True if the input contained SQL Injection attacks, false otherwise"
+      OriginalInput:
+        type: "string"
+        description: "Original input string"
+    description: "Result of performing an SQL Injection protection operation"
+    example:
+      ContainedSqlInjectionAttack: true
+      Successful: true
+      OriginalInput: "OriginalInput"
+  SqlInjectionCheckBatchRequest:
+    type: "object"
+    properties:
+      RequestItems:
+        type: "array"
+        description: "Multiple items to detect for SQL Injection"
+        items:
+          $ref: "#/definitions/SqlInjectionCheckRequestItem"
+      DetectionLevel:
+        type: "string"
+        description: "Set to Normal to target a high-security SQL Injection detection\
+          \ level with a very low false positive rate; select High to target a very-high\
+          \ security SQL Injection detection level with higher false positives.  Default\
+          \ is Normal (recommended)."
+    description: "Input to a batch SQL Injection detection operation"
+    example:
+      RequestItems:
+      - InputText: "InputText"
+      - InputText: "InputText"
+      DetectionLevel: "DetectionLevel"
+  SqlInjectionCheckRequestItem:
+    type: "object"
+    properties:
+      InputText:
+        type: "string"
+        description: "Individual input text item to check for SQL Injection"
+    description: "Individual item to protect for SQL Injection"
+    example:
+      InputText: "InputText"
+  SqlInjectionCheckBatchResponse:
+    type: "object"
+    properties:
+      ResultItems:
+        type: "array"
+        description: "Results from performing a batch SQL Injection detection operation;\
+          \ order is preserved from input data"
+        items:
+          $ref: "#/definitions/SqlInjectionDetectionResult"
+    description: "Result of performing a batch XSS protection operation"
+    example:
+      ResultItems:
+      - ContainedSqlInjectionAttack: true
+        Successful: true
+        OriginalInput: "OriginalInput"
+      - ContainedSqlInjectionAttack: true
+        Successful: true
+        OriginalInput: "OriginalInput"
   XssProtectionResult:
     type: "object"
     properties:
