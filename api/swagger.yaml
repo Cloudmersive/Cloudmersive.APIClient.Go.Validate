@@ -1590,6 +1590,90 @@ paths:
             $ref: "#/definitions/XssProtectionBatchResponse"
       security:
       - Apikey: []
+  /validate/text-input/check/xxe:
+    post:
+      tags:
+      - "TextInput"
+      summary: "Protect text input from XML External Entity (XXE) attacks"
+      description: "Detects XXE (XML External Entity) attacks from text input."
+      operationId: "TextInput_CheckXxe"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "User-facing text input."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      - name: "allowInternetUrls"
+        in: "header"
+        description: "Optional: Set to true to allow Internet-based dependency URLs\
+          \ for DTDs and other XML External Entitites, set to false to block.  Default\
+          \ is false."
+        required: false
+        type: "boolean"
+        x-exportParamName: "AllowInternetUrls"
+        x-optionalDataType: "Bool"
+      - name: "knownSafeUrls"
+        in: "header"
+        description: "Optional: Comma separated list of fully-qualified URLs that\
+          \ will automatically be considered safe."
+        required: false
+        type: "string"
+        x-exportParamName: "KnownSafeUrls"
+        x-optionalDataType: "String"
+      - name: "knownUnsafeUrls"
+        in: "header"
+        description: "Optional: Comma separated list of fully-qualified URLs that\
+          \ will automatically be considered unsafe."
+        required: false
+        type: "string"
+        x-exportParamName: "KnownUnsafeUrls"
+        x-optionalDataType: "String"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/XxeDetectionResult"
+      security:
+      - Apikey: []
+  /validate/text-input/check/xxe/batch:
+    post:
+      tags:
+      - "TextInput"
+      summary: "Protect text input from XML External Entity (XXE) attacks"
+      description: "Detects XXE (XML External Entity) attacks from text input."
+      operationId: "TextInput_CheckXxeBatch"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "request"
+        required: true
+        schema:
+          $ref: "#/definitions/XxeDetectionBatchRequest"
+        x-exportParamName: "Request"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/XxeDetectionBatchResponse"
+      security:
+      - Apikey: []
   /validate/useragent/parse:
     post:
       tags:
@@ -3519,6 +3603,94 @@ definitions:
         ContainedXss: true
         Successful: true
         OriginalInput: "OriginalInput"
+  XxeDetectionResult:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if the operation was successful, false otherwise"
+      ContainedXxe:
+        type: "boolean"
+        description: "True if the input contained XXE threats, false otherwise"
+    description: "Result of performing an XXE threat detection operation"
+    example:
+      Successful: true
+      ContainedXxe: true
+  XxeDetectionBatchRequest:
+    type: "object"
+    properties:
+      RequestItems:
+        type: "array"
+        description: "Multiple items to protect for XXE"
+        items:
+          $ref: "#/definitions/XxeDetectionRequestItem"
+    description: "Input to a batch XXE detection operation"
+    example:
+      RequestItems:
+      - AllowInternetUrls: true
+        KnownSafeUrls:
+        - "KnownSafeUrls"
+        - "KnownSafeUrls"
+        InputText: "InputText"
+        KnownUnsafeUrls:
+        - "KnownUnsafeUrls"
+        - "KnownUnsafeUrls"
+      - AllowInternetUrls: true
+        KnownSafeUrls:
+        - "KnownSafeUrls"
+        - "KnownSafeUrls"
+        InputText: "InputText"
+        KnownUnsafeUrls:
+        - "KnownUnsafeUrls"
+        - "KnownUnsafeUrls"
+  XxeDetectionRequestItem:
+    type: "object"
+    properties:
+      InputText:
+        type: "string"
+        description: "Individual input text item to protect from XXE"
+      AllowInternetUrls:
+        type: "boolean"
+        description: "Optional: Set to true to allow Internet-based dependency URLs\
+          \ for DTDs and other XML External Entitites, set to false to block.  Default\
+          \ is false."
+      KnownSafeUrls:
+        type: "array"
+        description: "Optional: Comma separated list of fully-qualified URLs that\
+          \ will automatically be considered safe."
+        items:
+          type: "string"
+      KnownUnsafeUrls:
+        type: "array"
+        description: "Optional: Comma separated list of fully-qualified URLs that\
+          \ will automatically be considered unsafe."
+        items:
+          type: "string"
+    description: "Individual item to detect for XXE"
+    example:
+      AllowInternetUrls: true
+      KnownSafeUrls:
+      - "KnownSafeUrls"
+      - "KnownSafeUrls"
+      InputText: "InputText"
+      KnownUnsafeUrls:
+      - "KnownUnsafeUrls"
+      - "KnownUnsafeUrls"
+  XxeDetectionBatchResponse:
+    type: "object"
+    properties:
+      ResultItems:
+        type: "array"
+        description: "Results from performing a batch XSS protection operation"
+        items:
+          $ref: "#/definitions/XxeDetectionResult"
+    description: "Result of performing a batch XXE detection operation"
+    example:
+      ResultItems:
+      - Successful: true
+        ContainedXxe: true
+      - Successful: true
+        ContainedXxe: true
   UserAgentValidateRequest:
     type: "object"
     properties:

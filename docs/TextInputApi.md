@@ -8,6 +8,8 @@ Method | HTTP request | Description
 [**TextInputCheckSqlInjectionBatch**](TextInputApi.md#TextInputCheckSqlInjectionBatch) | **Post** /validate/text-input/check/sql-injection/batch | Check and protect multiple text inputs for SQL Injection (SQLI) attacks in batch
 [**TextInputCheckXss**](TextInputApi.md#TextInputCheckXss) | **Post** /validate/text-input/check/xss | Check text input for Cross-Site-Scripting (XSS) attacks
 [**TextInputCheckXssBatch**](TextInputApi.md#TextInputCheckXssBatch) | **Post** /validate/text-input/check-and-protect/xss/batch | Check and protect multiple text inputs for Cross-Site-Scripting (XSS) attacks in batch
+[**TextInputCheckXxe**](TextInputApi.md#TextInputCheckXxe) | **Post** /validate/text-input/check/xxe | Protect text input from XML External Entity (XXE) attacks
+[**TextInputCheckXxeBatch**](TextInputApi.md#TextInputCheckXxeBatch) | **Post** /validate/text-input/check/xxe/batch | Protect text input from XML External Entity (XXE) attacks
 [**TextInputProtectXss**](TextInputApi.md#TextInputProtectXss) | **Post** /validate/text-input/protect/xss | Protect text input from Cross-Site-Scripting (XSS) attacks through normalization
 
 
@@ -120,6 +122,73 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**XssProtectionBatchResponse**](XssProtectionBatchResponse.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **TextInputCheckXxe**
+> XxeDetectionResult TextInputCheckXxe(ctx, value, optional)
+Protect text input from XML External Entity (XXE) attacks
+
+Detects XXE (XML External Entity) attacks from text input.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **value** | **string**| User-facing text input. | 
+ **optional** | ***TextInputApiTextInputCheckXxeOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a TextInputApiTextInputCheckXxeOpts struct
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **allowInternetUrls** | **optional.Bool**| Optional: Set to true to allow Internet-based dependency URLs for DTDs and other XML External Entitites, set to false to block.  Default is false. | 
+ **knownSafeUrls** | **optional.String**| Optional: Comma separated list of fully-qualified URLs that will automatically be considered safe. | 
+ **knownUnsafeUrls** | **optional.String**| Optional: Comma separated list of fully-qualified URLs that will automatically be considered unsafe. | 
+
+### Return type
+
+[**XxeDetectionResult**](XxeDetectionResult.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **TextInputCheckXxeBatch**
+> XxeDetectionBatchResponse TextInputCheckXxeBatch(ctx, request)
+Protect text input from XML External Entity (XXE) attacks
+
+Detects XXE (XML External Entity) attacks from text input.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **request** | [**XxeDetectionBatchRequest**](XxeDetectionBatchRequest.md)|  | 
+
+### Return type
+
+[**XxeDetectionBatchResponse**](XxeDetectionBatchResponse.md)
 
 ### Authorization
 
