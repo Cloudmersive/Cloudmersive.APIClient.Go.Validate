@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DomainCheck**](DomainApi.md#DomainCheck) | **Post** /validate/domain/check | Validate a domain name
 [**DomainGetTopLevelDomainFromUrl**](DomainApi.md#DomainGetTopLevelDomainFromUrl) | **Post** /validate/domain/url/get-top-level-domain | Get top-level domain name from URL
+[**DomainIsAdminPath**](DomainApi.md#DomainIsAdminPath) | **Post** /validate/domain/url/is-admin-path | Check if path is a high-risk server administration path
 [**DomainPhishingCheck**](DomainApi.md#DomainPhishingCheck) | **Post** /validate/domain/url/phishing-threat-check | Check a URL for Phishing threats
 [**DomainPost**](DomainApi.md#DomainPost) | **Post** /validate/domain/whois | Get WHOIS information for a domain
 [**DomainQualityScore**](DomainApi.md#DomainQualityScore) | **Post** /validate/domain/quality-score | Validate a domain name&#39;s quality score
@@ -60,6 +61,34 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ValidateUrlResponseSyntaxOnly**](ValidateUrlResponseSyntaxOnly.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **DomainIsAdminPath**
+> IsAdminPathResponse DomainIsAdminPath(ctx, value)
+Check if path is a high-risk server administration path
+
+Check if the input URL or relative path is a server Administration Path, and therefore a risk for remote access.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **value** | **string**| URL or relative path to check, e.g. \&quot;/admin/login\&quot;.  The input is a string so be sure to enclose it in double-quotes. | 
+
+### Return type
+
+[**IsAdminPathResponse**](IsAdminPathResponse.md)
 
 ### Authorization
 

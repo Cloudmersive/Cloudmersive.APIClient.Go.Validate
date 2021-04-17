@@ -787,6 +787,38 @@ paths:
             $ref: "#/definitions/PhishingCheckResponse"
       security:
       - Apikey: []
+  /validate/domain/url/is-admin-path:
+    post:
+      tags:
+      - "Domain"
+      summary: "Check if path is a high-risk server administration path"
+      description: "Check if the input URL or relative path is a server Administration\
+        \ Path, and therefore a risk for remote access."
+      operationId: "Domain_IsAdminPath"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "URL or relative path to check, e.g. \"/admin/login\".  The input\
+          \ is a string so be sure to enclose it in double-quotes."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/IsAdminPathResponse"
+      security:
+      - Apikey: []
   /validate/domain/url/safety-threat-check:
     post:
       tags:
@@ -2703,6 +2735,19 @@ definitions:
     example:
       CleanURL: true
       ThreatType: "ThreatType"
+  IsAdminPathResponse:
+    type: "object"
+    properties:
+      IsAdminPathNode:
+        type: "boolean"
+        description: "True if the input IP address is an Admin Path, and false otherwise"
+      Successful:
+        type: "boolean"
+        description: "True if the operation was successful, false otherwise"
+    description: "Result of performing an Admin Path operation"
+    example:
+      IsAdminPathNode: true
+      Successful: true
   UrlSafetyCheckRequestFull:
     type: "object"
     properties:
