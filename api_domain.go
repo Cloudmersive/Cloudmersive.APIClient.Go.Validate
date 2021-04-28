@@ -232,8 +232,8 @@ func (a *DomainApiService) DomainGetTopLevelDomainFromUrl(ctx context.Context, r
 }
 
 /* 
-DomainApiService Check if path is a high-risk server administration path
-Check if the input URL or relative path is a server Administration Path, and therefore a risk for remote access.
+DomainApiService Check if path is a high-risk or vulnerable server administration path
+Check if the input URL or relative path is a server Administration Path, and therefore a risk or vulnerability for remote access.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param value URL or relative path to check, e.g. \&quot;/admin/login\&quot;.  The input is a string so be sure to enclose it in double-quotes.
 

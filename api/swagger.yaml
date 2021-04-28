@@ -791,9 +791,9 @@ paths:
     post:
       tags:
       - "Domain"
-      summary: "Check if path is a high-risk server administration path"
+      summary: "Check if path is a high-risk or vulnerable server administration path"
       description: "Check if the input URL or relative path is a server Administration\
-        \ Path, and therefore a risk for remote access."
+        \ Path, and therefore a risk or vulnerability for remote access."
       operationId: "Domain_IsAdminPath"
       consumes:
       - "application/json"
@@ -1620,6 +1620,39 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/XssProtectionBatchResponse"
+      security:
+      - Apikey: []
+  /validate/text-input/html/check/ssrf:
+    post:
+      tags:
+      - "TextInput"
+      summary: "Protect html input from Server-side Request Forgery (SSRF) attacks"
+      description: "Detects SSRF (Server-side request forgery) attacks and unsafe\
+        \ URL attacks from HTML text input, where attackers can attempt to access\
+        \ unsafe local or network paths in the server environment by injecting them\
+        \ into HTML."
+      operationId: "TextInput_CheckHtmlSsrf"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "value"
+        description: "User-facing HTML input."
+        required: true
+        schema:
+          type: "string"
+        x-exportParamName: "Value"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/HtmlSsrfDetectionResult"
       security:
       - Apikey: []
   /validate/text-input/check/xxe:
@@ -3648,6 +3681,19 @@ definitions:
         ContainedXss: true
         Successful: true
         OriginalInput: "OriginalInput"
+  HtmlSsrfDetectionResult:
+    type: "object"
+    properties:
+      Successful:
+        type: "boolean"
+        description: "True if the operation was successful, false otherwise"
+      ContainedThreats:
+        type: "boolean"
+        description: "True if the input contained SSRF threats, false otherwise"
+    description: "Result of performing an XXE threat detection operation"
+    example:
+      ContainedThreats: true
+      Successful: true
   XxeDetectionResult:
     type: "object"
     properties:

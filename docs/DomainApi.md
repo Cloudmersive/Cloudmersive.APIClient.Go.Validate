@@ -6,7 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**DomainCheck**](DomainApi.md#DomainCheck) | **Post** /validate/domain/check | Validate a domain name
 [**DomainGetTopLevelDomainFromUrl**](DomainApi.md#DomainGetTopLevelDomainFromUrl) | **Post** /validate/domain/url/get-top-level-domain | Get top-level domain name from URL
-[**DomainIsAdminPath**](DomainApi.md#DomainIsAdminPath) | **Post** /validate/domain/url/is-admin-path | Check if path is a high-risk server administration path
+[**DomainIsAdminPath**](DomainApi.md#DomainIsAdminPath) | **Post** /validate/domain/url/is-admin-path | Check if path is a high-risk or vulnerable server administration path
 [**DomainPhishingCheck**](DomainApi.md#DomainPhishingCheck) | **Post** /validate/domain/url/phishing-threat-check | Check a URL for Phishing threats
 [**DomainPost**](DomainApi.md#DomainPost) | **Post** /validate/domain/whois | Get WHOIS information for a domain
 [**DomainQualityScore**](DomainApi.md#DomainQualityScore) | **Post** /validate/domain/quality-score | Validate a domain name&#39;s quality score
@@ -75,9 +75,9 @@ Name | Type | Description  | Notes
 
 # **DomainIsAdminPath**
 > IsAdminPathResponse DomainIsAdminPath(ctx, value)
-Check if path is a high-risk server administration path
+Check if path is a high-risk or vulnerable server administration path
 
-Check if the input URL or relative path is a server Administration Path, and therefore a risk for remote access.
+Check if the input URL or relative path is a server Administration Path, and therefore a risk or vulnerability for remote access.
 
 ### Required Parameters
 

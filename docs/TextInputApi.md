@@ -4,6 +4,7 @@ All URIs are relative to *https://api.cloudmersive.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**TextInputCheckHtmlSsrf**](TextInputApi.md#TextInputCheckHtmlSsrf) | **Post** /validate/text-input/html/check/ssrf | Protect html input from Server-side Request Forgery (SSRF) attacks
 [**TextInputCheckSqlInjection**](TextInputApi.md#TextInputCheckSqlInjection) | **Post** /validate/text-input/check/sql-injection | Check text input for SQL Injection (SQLI) attacks
 [**TextInputCheckSqlInjectionBatch**](TextInputApi.md#TextInputCheckSqlInjectionBatch) | **Post** /validate/text-input/check/sql-injection/batch | Check and protect multiple text inputs for SQL Injection (SQLI) attacks in batch
 [**TextInputCheckXss**](TextInputApi.md#TextInputCheckXss) | **Post** /validate/text-input/check/xss | Check text input for Cross-Site-Scripting (XSS) attacks
@@ -12,6 +13,34 @@ Method | HTTP request | Description
 [**TextInputCheckXxeBatch**](TextInputApi.md#TextInputCheckXxeBatch) | **Post** /validate/text-input/check/xxe/batch | Protect text input from XML External Entity (XXE) attacks
 [**TextInputProtectXss**](TextInputApi.md#TextInputProtectXss) | **Post** /validate/text-input/protect/xss | Protect text input from Cross-Site-Scripting (XSS) attacks through normalization
 
+
+# **TextInputCheckHtmlSsrf**
+> HtmlSsrfDetectionResult TextInputCheckHtmlSsrf(ctx, value)
+Protect html input from Server-side Request Forgery (SSRF) attacks
+
+Detects SSRF (Server-side request forgery) attacks and unsafe URL attacks from HTML text input, where attackers can attempt to access unsafe local or network paths in the server environment by injecting them into HTML.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **value** | **string**| User-facing HTML input. | 
+
+### Return type
+
+[**HtmlSsrfDetectionResult**](HtmlSsrfDetectionResult.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **TextInputCheckSqlInjection**
 > SqlInjectionDetectionResult TextInputCheckSqlInjection(ctx, value, optional)
