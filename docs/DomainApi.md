@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**DomainSsrfCheck**](DomainApi.md#DomainSsrfCheck) | **Post** /validate/domain/url/ssrf-threat-check | Check a URL for SSRF threats
 [**DomainSsrfCheckBatch**](DomainApi.md#DomainSsrfCheckBatch) | **Post** /validate/domain/url/ssrf-threat-check/batch | Check a URL for SSRF threats in batches
 [**DomainUrlFull**](DomainApi.md#DomainUrlFull) | **Post** /validate/domain/url/full | Validate a URL fully
+[**DomainUrlHtmlSsrfCheck**](DomainApi.md#DomainUrlHtmlSsrfCheck) | **Post** /validate/domain/url/ssrf-threat-check/html-embedded | Check a URL for HTML embedded SSRF threats
 [**DomainUrlSyntaxOnly**](DomainApi.md#DomainUrlSyntaxOnly) | **Post** /validate/domain/url/syntax-only | Validate a URL syntactically
 
 
@@ -285,6 +286,34 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ValidateUrlResponseFull**](ValidateUrlResponseFull.md)
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json
+ - **Accept**: application/json, text/json, application/xml, text/xml
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **DomainUrlHtmlSsrfCheck**
+> UrlHtmlSsrfResponseFull DomainUrlHtmlSsrfCheck(ctx, request)
+Check a URL for HTML embedded SSRF threats
+
+Checks if an input URL HTML is at risk of containing one or more embedded SSRF (Server-side request forgery) threats or attacks.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **request** | [**UrlHtmlSsrfRequestFull**](UrlHtmlSsrfRequestFull.md)| Input URL request | 
+
+### Return type
+
+[**UrlHtmlSsrfResponseFull**](UrlHtmlSsrfResponseFull.md)
 
 ### Authorization
 
