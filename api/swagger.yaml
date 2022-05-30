@@ -1299,6 +1299,35 @@ paths:
             $ref: "#/definitions/LeadEnrichmentResponse"
       security:
       - Apikey: []
+  /validate/lead-enrichment/lead/email/company-information:
+    post:
+      tags:
+      - "LeadEnrichment"
+      summary: "Get company information from email address"
+      operationId: "LeadEnrichment_GetCompanyInformation"
+      consumes:
+      - "application/json"
+      - "text/json"
+      produces:
+      - "application/json"
+      - "text/json"
+      - "application/xml"
+      - "text/xml"
+      parameters:
+      - in: "body"
+        name: "request"
+        description: "Input email address lead"
+        required: true
+        schema:
+          $ref: "#/definitions/EmailLead"
+        x-exportParamName: "Request"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/LeadEnrichmentResponse"
+      security:
+      - Apikey: []
   /validate/name/full-name:
     post:
       tags:
@@ -3348,6 +3377,13 @@ definitions:
       ContactGender: "ContactGender"
       CompanyCity: "CompanyCity"
       CompanyCountry: "CompanyCountry"
+  EmailLead:
+    type: "object"
+    properties:
+      EmailAddress:
+        type: "string"
+    example:
+      EmailAddress: "EmailAddress"
   FullNameValidationRequest:
     type: "object"
     properties:
