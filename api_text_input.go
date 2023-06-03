@@ -31,10 +31,17 @@ TextInputApiService Protect html input from Server-side Request Forgery (SSRF) a
 Detects SSRF (Server-side request forgery) attacks and unsafe URL attacks from HTML text input, where attackers can attempt to access unsafe local or network paths in the server environment by injecting them into HTML.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param value User-facing HTML input.
+ * @param optional nil or *TextInputApiTextInputCheckHtmlSsrfOpts - Optional Parameters:
+     * @param "AllowCidScheme" (optional.Bool) -  Optional: Set to true to allow cid: scheme URLs for email message attachments.  Default is false.
 
 @return HtmlSsrfDetectionResult
 */
-func (a *TextInputApiService) TextInputCheckHtmlSsrf(ctx context.Context, value string) (HtmlSsrfDetectionResult, *http.Response, error) {
+
+type TextInputApiTextInputCheckHtmlSsrfOpts struct { 
+	AllowCidScheme optional.Bool
+}
+
+func (a *TextInputApiService) TextInputCheckHtmlSsrf(ctx context.Context, value string, localVarOptionals *TextInputApiTextInputCheckHtmlSsrfOpts) (HtmlSsrfDetectionResult, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
@@ -66,6 +73,9 @@ func (a *TextInputApiService) TextInputCheckHtmlSsrf(ctx context.Context, value 
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	if localVarOptionals != nil && localVarOptionals.AllowCidScheme.IsSet() {
+		localVarHeaderParams["allowCidScheme"] = parameterToString(localVarOptionals.AllowCidScheme.Value(), "")
 	}
 	// body params
 	localVarPostBody = &value

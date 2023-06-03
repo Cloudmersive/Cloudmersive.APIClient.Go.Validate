@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 
 # **TextInputCheckHtmlSsrf**
-> HtmlSsrfDetectionResult TextInputCheckHtmlSsrf(ctx, value)
+> HtmlSsrfDetectionResult TextInputCheckHtmlSsrf(ctx, value, optional)
 Protect html input from Server-side Request Forgery (SSRF) attacks
 
 Detects SSRF (Server-side request forgery) attacks and unsafe URL attacks from HTML text input, where attackers can attempt to access unsafe local or network paths in the server environment by injecting them into HTML.
@@ -26,6 +26,15 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **value** | **string**| User-facing HTML input. | 
+ **optional** | ***TextInputApiTextInputCheckHtmlSsrfOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a TextInputApiTextInputCheckHtmlSsrfOpts struct
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **allowCidScheme** | **optional.Bool**| Optional: Set to true to allow cid: scheme URLs for email message attachments.  Default is false. | 
 
 ### Return type
 

@@ -1708,6 +1708,14 @@ paths:
         schema:
           type: "string"
         x-exportParamName: "Value"
+      - name: "allowCidScheme"
+        in: "header"
+        description: "Optional: Set to true to allow cid: scheme URLs for email message\
+          \ attachments.  Default is false."
+        required: false
+        type: "boolean"
+        x-exportParamName: "AllowCidScheme"
+        x-optionalDataType: "Bool"
       responses:
         "200":
           description: "OK"
